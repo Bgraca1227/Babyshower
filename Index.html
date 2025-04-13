@@ -158,7 +158,7 @@
             position: relative;
             width: 80%;
             margin: 35px auto;
-            height: 42%;
+            height: 300px; /* Fixed height instead of percentage */
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15),
@@ -612,7 +612,7 @@
             }
             
             .ultrasound-container {
-                height: 35%;
+                height: 250px;
             }
         }
         
@@ -642,7 +642,7 @@
             
             .ultrasound-container {
                 width: 90%;
-                height: 30%;
+                height: 200px;
             }
             
             .header, .details, .ultrasound-container, .button-container {
@@ -657,7 +657,7 @@
             }
             
             .ultrasound-container {
-                height: 200px;
+                height: 180px;
             }
         }
     </style>
@@ -687,7 +687,8 @@
                 <div class="ultrasound-container">
                     <div class="ultrasound-frame">
                         <div class="ultrasound-placeholder">
-                            <img src="https://imgur.com/YwkjvSI" alt="placeholder">
+                            <!-- Fixed direct link to Imgur image -->
+                            <img src="https://i.postimg.cc/bJZsyC4p/IMG-1513.gif" alt="Baby ultrasound">
                             <div class="scan-line"></div>
                         </div>
                     </div>
@@ -699,7 +700,8 @@
                 </div>
                 
                 <div class="button-container">
-                    <a href="#" class="support-button" id="support-btn">Support Our Baby</a>
+                    <!-- Replace with your actual support page URL -->
+                    <a href="https://my.babylist.com/christopher-velez" class="support-button" id="support-btn">Support Our Baby</a>
                 </div>
             </div>
         </div>
@@ -820,7 +822,7 @@
                 revealCard();
             }, 500);
             
-            // Set up button event listener
+            // Set up button event listener with navigation
             document.getElementById('support-btn').addEventListener('click', function(e) {
                 e.preventDefault();
                 triggerSupportAnimation();
@@ -829,9 +831,9 @@
                     top: 0,
                     behavior: 'smooth'
                 });
-                // For demonstration purposes - in real use, this would navigate to the actual link
+                // Navigate to the support page after animation completes
                 setTimeout(() => {
-                    alert('This would navigate to the support link');
+                    window.location.href = this.href;
                 }, 1500);
             });
         });
