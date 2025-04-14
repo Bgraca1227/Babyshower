@@ -1,3 +1,6 @@
+I'll add zoom functionality for the ultrasound GIF and a language toggle for English/Spanish. Here's the updated code:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -157,10 +160,11 @@
         /* Fixed ultrasound container */
         .ultrasound-container {
             position: relative;
-            width: 80%;
+            width: auto; /* Let width be determined by content */
+            max-width: 90%; /* Maximum width relative to parent */
             margin: 35px auto;
-            min-height: 200px; /* Minimum height to prevent collapse */
-            height: auto; /* Auto height to adapt to content */
+            min-height: 200px;
+            height: auto;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15),
@@ -169,27 +173,27 @@
             transform: scale(0.9);
             opacity: 0;
             background: var(--light-color);
-            border: 6px solid transparent;
+            border: 2px solid transparent; /* Even thinner border */
             background-clip: padding-box;
             position: relative;
             z-index: 10;
-            display: flex; /* Use flex layout */
-            justify-content: center; /* Center content horizontally */
-            align-items: center; /* Center content vertically */
+            display: inline-flex; /* Use inline-flex for better content-based sizing */
+            justify-content: center;
+            align-items: center;
         }
         
         .ultrasound-container::before {
             content: "";
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
             background: linear-gradient(135deg, var(--pink-glow), var(--blue-glow), var(--accent-color), var(--gold-color));
             background-size: 400% 400%;
             animation: gradientBorder 10s ease infinite;
             z-index: -1;
-            border-radius: 22px;
+            border-radius: 18px;
         }
         
         @keyframes gradientBorder {
@@ -237,9 +241,10 @@
         }
         
         .ultrasound-placeholder {
-            width: 90%;
-            height: 90%;
-            background-color: #f0f0f0;
+            margin: 15px; /* Exact 15px margin instead of padding */
+            width: auto;
+            height: auto;
+            background-color: transparent;
             border-radius: 12px;
             display: flex;
             justify-content: center;
@@ -248,7 +253,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
-            padding: 10px; /* Add padding */
+            cursor: pointer; /* Show pointer on hover to indicate clickable */
         }
         
         .ultrasound-placeholder::after {
@@ -265,15 +270,26 @@
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
         }
         
+        /* Spanish version */
+        .ultrasound-placeholder.es::after {
+            content: "Primera Foto del Bebé";
+        }
+        
         .ultrasound-placeholder img {
+            width: auto;
+            height: auto;
+            min-width: 250px; /* Minimum width to ensure visibility */
             max-width: 100%;
             max-height: 100%;
-            height: auto; /* Maintain aspect ratio */
-            width: auto; /* Maintain aspect ratio */
             object-fit: contain;
             filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
             animation: subtle-float 6s infinite ease-in-out;
-            display: block; /* Ensure image is block element */
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .ultrasound-placeholder:hover img {
+            transform: scale(1.05); /* Slight scale on hover */
         }
         
         @keyframes subtle-float {
@@ -290,6 +306,95 @@
             height: 100%;
             background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6), transparent);
             animation: shine 4s infinite;
+        }
+        
+        /* Zoom modal */
+        .zoom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .zoom-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .zoom-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            margin: auto;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 182, 193, 0.5);
+            border-radius: 15px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+        
+        .zoom-modal.active .zoom-content {
+            transform: scale(1);
+        }
+        
+        .zoom-image {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 80vh;
+            margin: 0 auto;
+        }
+        
+        .close-zoom {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .close-zoom:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-color);
+        }
+        
+        .close-zoom::before,
+        .close-zoom::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background-color: white;
+            border-radius: 2px;
+        }
+        
+        .close-zoom::before {
+            transform: rotate(45deg);
+        }
+        
+        .close-zoom::after {
+            transform: rotate(-45deg);
         }
         
         .ultrasound-overlay {
@@ -564,6 +669,64 @@
             opacity: 0;
         }
         
+        /* Language toggle */
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            padding: 5px 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .language-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .toggle-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 0 5px;
+            color: var(--text-color);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+            background: var(--accent-color);
+            border-radius: 30px;
+            margin: 0 5px;
+            transition: background 0.3s ease;
+        }
+        
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-switch.es::before {
+            transform: translateX(18px);
+        }
+        
+        .toggle-switch.es {
+            background: var(--secondary-color);
+        }
+        
         @keyframes shine {
             0% {
                 left: -100%;
@@ -620,11 +783,14 @@
                 min-height: 85vh;
             }
             
-            /* Improved responsive ultrasound container */
-            .ultrasound-container {
-                width: 90%;
-                min-height: 150px;
-                aspect-ratio: 4/3; /* Maintain a sensible aspect ratio */
+            .ultrasound-placeholder img {
+                min-width: 200px;
+            }
+            
+            .language-toggle {
+                top: 15px;
+                right: 15px;
+                transform: scale(0.9);
             }
         }
         
@@ -652,26 +818,25 @@
                 min-height: 88vh;
             }
             
-            /* Further adjustments for very small screens */
-            .ultrasound-container {
-                width: 95%;
-                min-height: 120px;
+            .ultrasound-placeholder img {
+                min-width: 150px;
             }
             
             .header, .details, .ultrasound-container, .button-container {
                 margin-top: 15px;
                 margin-bottom: 15px;
             }
+            
+            .language-toggle {
+                top: 10px;
+                right: 10px;
+                transform: scale(0.8);
+            }
         }
         
         @media (max-height: 700px) {
             .card {
                 padding-bottom: 30px;
-            }
-            
-            /* Ensure ultrasound container is still visible */
-            .ultrasound-container {
-                min-height: 100px;
             }
         }
     </style>
@@ -681,6 +846,12 @@
     
     <div class="card-container">
         <div class="card" id="baby-shower-card">
+            <div class="language-toggle" id="lang-toggle">
+                <span class="toggle-label">EN</span>
+                <div class="toggle-switch"></div>
+                <span class="toggle-label">ES</span>
+            </div>
+            
             <div class="content-wrapper">
                 <div class="decorations">
                     <!-- Hearts will be generated by JS -->
@@ -694,14 +865,14 @@
                 </div>
                 
                 <div class="header">
-                    <h1>Erika's Baby Shower</h1>
-                    <p class="subtitle">A new life is about to begin</p>
+                    <h1 data-en="Erika's Baby Shower" data-es="Baby Shower de Erika">Erika's Baby Shower</h1>
+                    <p class="subtitle" data-en="A new life is about to begin" data-es="Una nueva vida está por comenzar">A new life is about to begin</p>
                 </div>
                 
                 <div class="ultrasound-container">
                     <div class="ultrasound-frame">
-                        <div class="ultrasound-placeholder">
-                            <!-- Image with onload handler to adjust container size -->
+                        <div class="ultrasound-placeholder" id="zoom-trigger">
+                            <!-- Image with correct sizing -->
                             <img 
                                 src="https://i.postimg.cc/bJZsyC4p/IMG-1513.gif" 
                                 alt="Baby ultrasound"
@@ -713,13 +884,21 @@
                 </div>
                 
                 <div class="details">
-                    <p class="details-text">Join us in celebrating this beautiful journey with Erika as she prepares to welcome her little miracle.</p>
+                    <p class="details-text" data-en="Join us in celebrating this beautiful journey with Erika as she prepares to welcome her little miracle." data-es="Acompáñanos a celebrar este hermoso camino con Erika mientras se prepara para recibir a su pequeño milagro.">Join us in celebrating this beautiful journey with Erika as she prepares to welcome her little miracle.</p>
                 </div>
                 
                 <div class="button-container">
-                    <a href="https://my.babylist.com/christopher-velez" class="support-button" id="support-btn">Support Our Baby</a>
+                    <a href="https://my.babylist.com/christopher-velez" class="support-button" id="support-btn" data-en="Support Our Baby" data-es="Apoya a Nuestro Bebé">Support Our Baby</a>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <!-- Zoom Modal -->
+    <div class="zoom-modal" id="zoom-modal">
+        <div class="zoom-content">
+            <div class="close-zoom" id="close-zoom"></div>
+            <img src="https://i.postimg.cc/bJZsyC4p/IMG-1513.gif" alt="Zoomed ultrasound" class="zoom-image">
         </div>
     </div>
     
@@ -852,42 +1031,152 @@
                     window.location.href = this.href;
                 }, 1500);
             });
+            
+            // Force load the GIF image to ensure it's fully loaded
+            const ultrasoundImg = document.querySelector('.ultrasound-placeholder img');
+            if (ultrasoundImg) {
+                const newImg = new Image();
+                newImg.onload = function() {
+                    adjustContainerSize(ultrasoundImg);
+                };
+                newImg.src = ultrasoundImg.src;
+            }
+            
+            // Set up zoom functionality
+            setupZoom();
+            
+            // Set up language toggle
+            setupLanguageToggle();
         });
         
         // Function to adjust container size based on image dimensions
         function adjustContainerSize(img) {
-            // Wait for image to load
+            // Get the ultrasound container and frame
+            const container = document.querySelector('.ultrasound-container');
+            const placeholder = document.querySelector('.ultrasound-placeholder');
+            
+            // Wait for image to be fully loaded
             if (img.complete) {
-                resizeContainer(img);
-            } else {
-                img.onload = function() {
-                    resizeContainer(img);
-                };
+                // Set maximum displayed height for the image
+                const maxDisplayHeight = 400;
+                
+                // Set displayed dimensions to be larger
+                const displayedWidth = Math.min(img.naturalWidth * 1.6, window.innerWidth * 0.8);
+                const heightRatio = img.naturalHeight / img.naturalWidth;
+                const displayedHeight = Math.min(displayedWidth * heightRatio, maxDisplayHeight);
+                
+                // Apply dimensions to image
+                img.style.width = `${displayedWidth}px`;
+                img.style.height = `${displayedHeight}px`;
+                
+                // Center the container in the card
+                container.style.display = 'flex';
+                container.style.margin = '35px auto';
+                
+                // Make the placeholder fit the image exactly
+                placeholder.style.width = 'auto';
+                placeholder.style.height = 'auto';
+                
+                // Reveal the container properly
+                anime({
+                    targets: '.ultrasound-container',
+                    opacity: [0, 1],
+                    scale: [0.9, 1],
+                    easing: 'easeOutExpo',
+                    duration: 1200
+                });
             }
         }
         
-        // Helper function to resize the container
-        function resizeContainer(img) {
-            // Get the ultrasound container
-            const container = document.querySelector('.ultrasound-container');
+        // Setup zoom functionality
+        function setupZoom() {
+            const zoomTrigger = document.getElementById('zoom-trigger');
+            const zoomModal = document.getElementById('zoom-modal');
+            const closeZoom = document.getElementById('close-zoom');
             
-            // Add a small buffer to the image dimensions (padding)
-            const padding = 40; 
-            
-            // Set the container's minimum height based on image height plus padding
-            if (img.naturalHeight > 0) {
-                const minHeight = img.naturalHeight + padding;
-                container.style.minHeight = minHeight + 'px';
-            }
-            
-            // Reveal the container properly
-            anime({
-                targets: '.ultrasound-container',
-                opacity: [0, 1],
-                scale: [0.9, 1],
-                easing: 'easeOutExpo',
-                duration: 1200
+            // Open modal on click
+            zoomTrigger.addEventListener('click', function() {
+                zoomModal.classList.add('active');
+                
+                // Create zoom-in animation
+                anime({
+                    targets: '.zoom-content',
+                    scale: [0.7, 1],
+                    opacity: [0, 1],
+                    duration: 500,
+                    easing: 'easeOutCubic'
+                });
             });
+            
+            // Close modal when clicking the close button
+            closeZoom.addEventListener('click', function() {
+                closeZoomModal();
+            });
+            
+            // Close modal when clicking outside the image
+            zoomModal.addEventListener('click', function(e) {
+                if (e.target === zoomModal) {
+                    closeZoomModal();
+                }
+            });
+            
+            // Function to close the zoom modal
+            function closeZoomModal() {
+                anime({
+                    targets: '.zoom-content',
+                    scale: [1, 0.7],
+                    opacity: [1, 0],
+                    duration: 300,
+                    easing: 'easeInCubic',
+                    complete: function() {
+                        zoomModal.classList.remove('active');
+                    }
+                });
+            }
+        }
+        
+        // Setup language toggle
+        function setupLanguageToggle() {
+            const toggle = document.getElementById('lang-toggle');
+            const toggleSwitch = toggle.querySelector('.toggle-switch');
+            let isSpanish = false;
+            
+            toggle.addEventListener('click', function() {
+                isSpanish = !isSpanish;
+                
+                if (isSpanish) {
+                    toggleSwitch.classList.add('es');
+                    document.querySelector('.ultrasound-placeholder').classList.add('es');
+                    changeLanguage('es');
+                } else {
+                    toggleSwitch.classList.remove('es');
+                    document.querySelector('.ultrasound-placeholder').classList.remove('es');
+                    changeLanguage('en');
+                }
+            });
+            
+            // Function to change text content based on language
+            function changeLanguage(lang) {
+                const elements = document.querySelectorAll('[data-en]');
+                
+                elements.forEach(element => {
+                    // Add a subtle animation effect
+                    anime({
+                        targets: element,
+                        opacity: [1, 0, 1],
+                        translateY: [0, -10, 0],
+                        duration: 600,
+                        easing: 'easeInOutQuad',
+                        update: function(anim) {
+                            // Change text at halfway point of animation
+                            if (anim.progress >= 50 && element.dataset.currentLang !== lang) {
+                                element.textContent = element.getAttribute(`data-${lang}`);
+                                element.dataset.currentLang = lang;
+                            }
+                        }
+                    });
+                });
+            }
         }
         
         // Function to create decorative elements
@@ -968,6 +1257,16 @@
                 easing: 'easeOutExpo',
                 duration: 1200,
                 delay: 1200
+            });
+            
+            // Language toggle animation
+            anime({
+                targets: '.language-toggle',
+                opacity: [0, 1],
+                translateY: [-20, 0],
+                easing: 'easeOutExpo',
+                duration: 1000,
+                delay: 1400
             });
             
             // Animate decorative elements
@@ -1141,7 +1440,11 @@
             message.style.padding = '15px 30px';
             message.style.borderRadius = '15px';
             message.style.backdropFilter = 'blur(5px)';
-            message.textContent = 'Thank You!';
+            
+            // Set message text based on current language
+            const isSpanish = document.querySelector('.toggle-switch').classList.contains('es');
+            message.textContent = isSpanish ? '¡Gracias!' : 'Thank You!';
+            
             document.querySelector('.card').appendChild(message);
             
             // Animate the message with a more dynamic effect
@@ -1221,3 +1524,24 @@
     </script>
 </body>
 </html>
+```
+
+I've added two new features to your baby shower virtual party favor:
+
+### 1. Zoom Functionality for the Ultrasound GIF
+
+- **Click to Zoom**: Users can now click on the ultrasound image to open a fullscreen modal with a larger version
+- **Smooth Animations**: The zoom has elegant fade-in/out and scale animations
+- **Close Options**: Users can close by clicking the X button or anywhere outside the image
+- **Mobile Compatible**: Works well on all device sizes
+- **Visual Indicator**: The image has a subtle hover effect to show it's clickable
+
+### 2. English/Spanish Language Toggle
+
+- **Language Switch**: Added a toggle in the top-right corner to switch between English and Spanish
+- **Animated Transitions**: Text changes with a smooth fade animation
+- **All Text Elements**: Translated the main title, subtitle, description, button text, and even the photo caption
+- **Visual Feedback**: The toggle changes color and position when switched
+- **Thank You Message**: Even the "Thank You" animation will show in the selected language
+
+These enhancements make the baby shower card more interactive and accessible to Spanish-speaking family members and friends. The code maintains all the beautiful animations and styling from the previous version while adding these new functionalities.​​​​​​​​​​​​​​​​
