@@ -154,11 +154,13 @@
             letter-spacing: 1px;
         }
         
+        /* Fixed ultrasound container */
         .ultrasound-container {
             position: relative;
             width: 80%;
             margin: 35px auto;
-            height: 42%;
+            min-height: 200px; /* Minimum height to prevent collapse */
+            height: auto; /* Auto height to adapt to content */
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15),
@@ -171,6 +173,9 @@
             background-clip: padding-box;
             position: relative;
             z-index: 10;
+            display: flex; /* Use flex layout */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
         }
         
         .ultrasound-container::before {
@@ -243,6 +248,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 10px; /* Add padding */
         }
         
         .ultrasound-placeholder::after {
@@ -262,9 +268,12 @@
         .ultrasound-placeholder img {
             max-width: 100%;
             max-height: 100%;
+            height: auto; /* Maintain aspect ratio */
+            width: auto; /* Maintain aspect ratio */
             object-fit: contain;
             filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
             animation: subtle-float 6s infinite ease-in-out;
+            display: block; /* Ensure image is block element */
         }
         
         @keyframes subtle-float {
@@ -611,8 +620,11 @@
                 min-height: 85vh;
             }
             
+            /* Improved responsive ultrasound container */
             .ultrasound-container {
-                height: 35%;
+                width: 90%;
+                min-height: 150px;
+                aspect-ratio: 4/3; /* Maintain a sensible aspect ratio */
             }
         }
         
@@ -640,9 +652,10 @@
                 min-height: 88vh;
             }
             
+            /* Further adjustments for very small screens */
             .ultrasound-container {
-                width: 90%;
-                height: 30%;
+                width: 95%;
+                min-height: 120px;
             }
             
             .header, .details, .ultrasound-container, .button-container {
@@ -656,8 +669,9 @@
                 padding-bottom: 30px;
             }
             
+            /* Ensure ultrasound container is still visible */
             .ultrasound-container {
-                height: 200px;
+                min-height: 100px;
             }
         }
     </style>
@@ -687,7 +701,11 @@
                 <div class="ultrasound-container">
                     <div class="ultrasound-frame">
                         <div class="ultrasound-placeholder">
-                            <img src="https://i.imgur.com/YwkjvSI.gif" alt="ultrasound">
+                            <!-- Image with onload handler to adjust container size -->
+                            <img 
+                                src="https://i.postimg.cc/bJZsyC4p/IMG-1513.gif" 
+                                alt="Baby ultrasound"
+                                onload="adjustContainerSize(this)">
                             <div class="scan-line"></div>
                         </div>
                     </div>
@@ -699,7 +717,7 @@
                 </div>
                 
                 <div class="button-container">
-                    <a href="#" class="support-button" id="support-btn">Support Our Baby</a>
+                    <a href="https://my.babylist.com/christopher-velez" class="support-button" id="support-btn">Support Our Baby</a>
                 </div>
             </div>
         </div>
@@ -820,7 +838,7 @@
                 revealCard();
             }, 500);
             
-            // Set up button event listener
+            // Set up button event listener with navigation
             document.getElementById('support-btn').addEventListener('click', function(e) {
                 e.preventDefault();
                 triggerSupportAnimation();
@@ -829,12 +847,48 @@
                     top: 0,
                     behavior: 'smooth'
                 });
-                // For demonstration purposes - in real use, this would navigate to the actual link
+                // Navigate to the support page after animation completes
                 setTimeout(() => {
-                    alert('This would navigate to the support link');
+                    window.location.href = this.href;
                 }, 1500);
             });
         });
+        
+        // Function to adjust container size based on image dimensions
+        function adjustContainerSize(img) {
+            // Wait for image to load
+            if (img.complete) {
+                resizeContainer(img);
+            } else {
+                img.onload = function() {
+                    resizeContainer(img);
+                };
+            }
+        }
+        
+        // Helper function to resize the container
+        function resizeContainer(img) {
+            // Get the ultrasound container
+            const container = document.querySelector('.ultrasound-container');
+            
+            // Add a small buffer to the image dimensions (padding)
+            const padding = 40; 
+            
+            // Set the container's minimum height based on image height plus padding
+            if (img.naturalHeight > 0) {
+                const minHeight = img.naturalHeight + padding;
+                container.style.minHeight = minHeight + 'px';
+            }
+            
+            // Reveal the container properly
+            anime({
+                targets: '.ultrasound-container',
+                opacity: [0, 1],
+                scale: [0.9, 1],
+                easing: 'easeOutExpo',
+                duration: 1200
+            });
+        }
         
         // Function to create decorative elements
         function createDecorations() {
@@ -894,15 +948,7 @@
                 delay: 500
             });
             
-            // Ultrasound container animation
-            anime({
-                targets: '.ultrasound-container',
-                opacity: [0, 1],
-                scale: [0.9, 1],
-                easing: 'easeOutExpo',
-                duration: 1200,
-                delay: 800
-            });
+            // Ultrasound container animation handled by adjustContainerSize
             
             // Details animation
             anime({
