@@ -1,1523 +1,576 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erika's Baby Shower</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <title>Our Little Princess Amaya - Enchanted Scrapbook</title>
     <style>
-        :root {
-            --primary-color: #FFD1DC;
-            --secondary-color: #C6E6FB;
-            --accent-color: #FFB6C1;
-            --text-color: #5a5a5a;
-            --light-color: #ffffff;
-            --gold-color: #FFC857;
-            --pink-glow: #FF99CC;
-            --blue-glow: #A0E9FF;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f9f7fe, #f0f8ff, #F9F5FF);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            min-height: 100vh;
-            margin: 0;
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Quicksand:wght@300;400;600&display=swap');
+
+```
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --royal-purple: #9B59B6;
+        --soft-pink: #FFB6C1;
+        --cream: #FFF8DC;
+        --gold: #FFD700;
+        --rose-gold: #E8B4B8;
+        --lavender: #E6E6FA;
+        --shadow: rgba(0, 0, 0, 0.1);
+        --paper: #FFFEF5;
+    }
+
+    body {
+        font-family: 'Quicksand', sans-serif;
+        background: linear-gradient(135deg, #FFF5F5 0%, #F3E5F5 100%);
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    /* Textured scrapbook background */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 182, 193, 0.03) 10px, rgba(255, 182, 193, 0.03) 20px),
+            repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(230, 230, 250, 0.03) 10px, rgba(230, 230, 250, 0.03) 20px);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* Floating decorative elements */
+    .decorative-elements {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    .deco-element {
+        position: absolute;
+        opacity: 0.1;
+        animation: gentle-float 20s infinite ease-in-out;
+    }
+
+    @keyframes gentle-float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        25% { transform: translateY(-30px) rotate(90deg); }
+        50% { transform: translateY(0) rotate(180deg); }
+        75% { transform: translateY(30px) rotate(270deg); }
+    }
+
+    /* Premium header */
+    .header {
+        text-align: center;
+        padding: 80px 20px 60px;
+        position: relative;
+        z-index: 10;
+    }
+
+    .title-decoration {
+        display: inline-block;
+        position: relative;
+        padding: 0 60px;
+    }
+
+    .title-decoration::before,
+    .title-decoration::after {
+        content: '✦';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2rem;
+        color: var(--gold);
+        animation: sparkle 3s ease-in-out infinite;
+    }
+
+    .title-decoration::before { left: 0; }
+    .title-decoration::after { right: 0; animation-delay: 1.5s; }
+
+    @keyframes sparkle {
+        0%, 100% { opacity: 0.3; transform: translateY(-50%) scale(0.8); }
+        50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+    }
+
+    .princess-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--royal-purple) 0%, var(--rose-gold) 50%, var(--gold) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    /* Gold foil divider */
+    .divider {
+        width: 300px;
+        height: 1px;
+        margin: 30px auto;
+        background: linear-gradient(90deg, transparent, var(--gold), var(--rose-gold), var(--gold), transparent);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .divider::after {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: -100%;
+        width: 50%;
+        height: 40px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+        animation: shine-sweep 4s infinite;
+    }
+
+    @keyframes shine-sweep {
+        0% { left: -100%; }
+        100% { left: 200%; }
+    }
+
+    /* Scrapbook pages container */
+    .scrapbook-pages {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px;
+        position: relative;
+        z-index: 10;
+        background: var(--paper);
+        box-shadow: 
+            0 20px 60px rgba(0, 0, 0, 0.1),
+            inset 0 0 120px rgba(255, 248, 220, 0.5);
+        border-radius: 5px;
+        overflow: visible;
+    }
+
+    /* Scattered photo layout */
+    .photo-collection {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 40px;
+        position: relative;
+    }
+
+    /* Polaroid-style photos */
+    .photo-wrapper {
+        position: relative;
+        transform: rotate(var(--rotation));
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+    }
+
+    .photo-wrapper:nth-child(1) { --rotation: -3deg; margin-top: 20px; }
+    .photo-wrapper:nth-child(2) { --rotation: 2deg; margin-top: -10px; }
+    .photo-wrapper:nth-child(3) { --rotation: -4deg; margin-top: 30px; }
+    .photo-wrapper:nth-child(4) { --rotation: 3deg; margin-top: -20px; }
+    .photo-wrapper:nth-child(5) { --rotation: -2deg; margin-top: 10px; }
+    .photo-wrapper:nth-child(6) { --rotation: 4deg; margin-top: -15px; }
+
+    .photo-wrapper:hover {
+        transform: rotate(0deg) scale(1.08);
+        z-index: 100;
+        filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.25));
+    }
+
+    /* Polaroid frame */
+    .polaroid {
+        background: white;
+        padding: 15px 15px 60px 15px;
+        border-radius: 3px;
+        position: relative;
+        background: linear-gradient(to bottom, #FFFFFF 0%, #FAFAFA 100%);
+    }
+
+    /* Decorative tape */
+    .tape {
+        position: absolute;
+        width: 80px;
+        height: 30px;
+        background: linear-gradient(135deg, rgba(255, 235, 205, 0.8), rgba(255, 228, 196, 0.8));
+        opacity: 0.7;
+        z-index: 10;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .tape-top {
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-2deg);
+    }
+
+    .tape-corner {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, rgba(255, 182, 193, 0.6), rgba(255, 192, 203, 0.6));
+        transform: rotate(45deg);
+    }
+
+    .photo-wrapper:nth-child(2n) .tape { 
+        background: linear-gradient(135deg, rgba(176, 224, 230, 0.6), rgba(173, 216, 230, 0.6)); 
+    }
+    
+    .photo-wrapper:nth-child(3n) .tape { 
+        background: linear-gradient(135deg, rgba(221, 160, 221, 0.6), rgba(216, 191, 216, 0.6)); 
+    }
+
+    .photo-wrapper:nth-child(odd) .tape-corner {
+        top: -30px;
+        right: -30px;
+    }
+
+    .photo-wrapper:nth-child(even) .tape-corner {
+        top: -30px;
+        left: -30px;
+    }
+
+    /* Photo placeholder */
+    .photo-content {
+        width: 100%;
+        height: 280px;
+        background: linear-gradient(135deg, var(--lavender) 0%, var(--cream) 100%);
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .photo-content::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+        animation: soft-glow 6s ease-in-out infinite;
+    }
+
+    @keyframes soft-glow {
+        0%, 100% { transform: scale(0.8); opacity: 0; }
+        50% { transform: scale(1.2); opacity: 0.5; }
+    }
+
+    .photo-icon {
+        font-size: 4rem;
+        opacity: 0.15;
+        z-index: 1;
+    }
+
+    /* Decorative stickers */
+    .sticker-decoration {
+        position: absolute;
+        font-size: 2rem;
+        filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.2));
+        z-index: 20;
+    }
+
+    .photo-wrapper:nth-child(1) .sticker-decoration { bottom: -20px; right: 20px; transform: rotate(15deg); }
+    .photo-wrapper:nth-child(2) .sticker-decoration { top: -25px; left: 20px; transform: rotate(-20deg); }
+    .photo-wrapper:nth-child(3) .sticker-decoration { bottom: -25px; left: 25px; transform: rotate(25deg); }
+    .photo-wrapper:nth-child(4) .sticker-decoration { top: -20px; right: 15px; transform: rotate(-15deg); }
+    .photo-wrapper:nth-child(5) .sticker-decoration { bottom: -30px; right: 30px; transform: rotate(20deg); }
+    .photo-wrapper:nth-child(6) .sticker-decoration { top: -25px; left: 30px; transform: rotate(-25deg); }
+
+    /* Hand-drawn decorations */
+    .doodle {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.2;
+        z-index: 5;
+    }
+
+    /* Premium lightbox */
+    .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(20, 10, 30, 0.97);
+        backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+    }
+
+    .lightbox.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .lightbox-content {
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        position: relative;
+        transform: scale(0.8);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    .lightbox.active .lightbox-content {
+        transform: scale(1);
+    }
+
+    .lightbox-photo {
+        width: 100%;
+        max-width: 800px;
+        height: 500px;
+        background: linear-gradient(135deg, var(--lavender) 0%, var(--cream) 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        width: 50px;
+        height: 50px;
+        background: var(--royal-purple);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: white;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .close-btn:hover {
+        transform: rotate(90deg) scale(1.1);
+    }
+
+    /* Footer */
+    .footer {
+        text-align: center;
+        padding: 60px 20px 40px;
+        color: var(--royal-purple);
+        position: relative;
+        z-index: 10;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+
+    /* Mobile optimization */
+    @media (max-width: 768px) {
+        .princess-name { font-size: 2.5rem; }
+        .photo-collection { 
+            grid-template-columns: 1fr; 
             padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--text-color);
-            overflow-x: hidden;
         }
-        
-        @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-        
-        .card-container {
-            position: relative;
-            width: 90%;
-            max-width: 800px;
-            height: auto;
-            min-height: 80vh;
-            max-height: 90vh;
-            perspective: 1500px;
-            margin: 20px 0;
-        }
-        
-        .card {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            border-radius: 25px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 
-                        0 0 30px rgba(255, 182, 193, 0.3), 
-                        inset 0 0 20px rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(15px);
-            opacity: 0;
-            transform: scale(0.8);
-            overflow-y: auto;
-            overflow-x: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            max-height: 90vh;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-color) rgba(255, 255, 255, 0.3);
-        }
-        
-        .card::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .card::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-        }
-        
-        .card::-webkit-scrollbar-thumb {
-            background-color: var(--accent-color);
-            border-radius: 10px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        
-        .content-wrapper {
-            padding: 20px 20px 40px 20px;
-            position: relative;
-        }
-        
-        .header {
-            position: relative;
-            width: 100%;
-            padding-top: 30px;
-            text-align: center;
-            z-index: 2;
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-color), var(--pink-glow), var(--gold-color));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-            letter-spacing: 3px;
-            position: relative;
-        }
-        
-        h1::after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(to right, var(--accent-color), transparent);
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-        
-        .subtitle {
-            font-size: 1.3rem;
-            font-weight: 400;
-            margin-bottom: 25px;
-            opacity: 0.9;
-            color: var(--text-color);
-            letter-spacing: 1px;
-        }
-        
-        /* Fixed ultrasound container */
-        .ultrasound-container {
-            position: relative;
-            width: auto; /* Let width be determined by content */
-            max-width: 90%; /* Maximum width relative to parent */
-            margin: 35px auto;
-            min-height: 200px;
-            height: auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15),
-                        0 0 25px rgba(255, 182, 193, 0.3),
-                        inset 0 0 15px rgba(255, 255, 255, 0.5);
-            transform: scale(0.9);
-            opacity: 0;
-            background: var(--light-color);
-            border: 2px solid transparent; /* Even thinner border */
-            background-clip: padding-box;
-            position: relative;
-            z-index: 10;
-            display: inline-flex; /* Use inline-flex for better content-based sizing */
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .ultrasound-container::before {
-            content: "";
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            background: linear-gradient(135deg, var(--pink-glow), var(--blue-glow), var(--accent-color), var(--gold-color));
-            background-size: 400% 400%;
-            animation: gradientBorder 10s ease infinite;
-            z-index: -1;
-            border-radius: 18px;
-        }
-        
-        @keyframes gradientBorder {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-        
-        .ultrasound-frame {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
-            z-index: 1;
-            overflow: hidden;
-        }
-        
-        .ultrasound-frame::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-            animation: framePulse 10s infinite ease-in-out;
-        }
-        
-        @keyframes framePulse {
-            0%, 100% {
-                opacity: 0.3;
-                transform: scale(0.8);
-            }
-            50% {
-                opacity: 0.7;
-                transform: scale(1.2);
-            }
-        }
-        
-        .ultrasound-placeholder {
-            margin: 15px; /* Exact 15px margin instead of padding */
-            width: auto;
-            height: auto;
-            background-color: transparent;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.5s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
-            cursor: pointer; /* Show pointer on hover to indicate clickable */
-        }
-        
-        .ultrasound-placeholder::after {
-            content: "Baby's First Photo";
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 0.8rem;
-            color: rgba(90, 90, 90, 0.6);
-            font-style: italic;
-            padding: 3px 8px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 4px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        /* Spanish version */
-        .ultrasound-placeholder.es::after {
-            content: "Primera Foto del Bebé";
-        }
-        
-        .ultrasound-placeholder img {
-            width: auto;
-            height: auto;
-            min-width: 250px; /* Minimum width to ensure visibility */
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
-            animation: subtle-float 6s infinite ease-in-out;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-        
-        .ultrasound-placeholder:hover img {
-            transform: scale(1.05); /* Slight scale on hover */
-        }
-        
-        @keyframes subtle-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        
-        .ultrasound-placeholder::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6), transparent);
-            animation: shine 4s infinite;
-        }
-        
-        /* Zoom modal */
-        .zoom-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .zoom-modal.active {
-            display: flex;
-            opacity: 1;
-        }
-        
-        .zoom-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            margin: auto;
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(255, 182, 193, 0.5);
-            border-radius: 15px;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+        .scrapbook-pages { 
+            margin: 20px;
             padding: 20px;
         }
-        
-        .zoom-modal.active .zoom-content {
-            transform: scale(1);
-        }
-        
-        .zoom-image {
-            display: block;
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 80vh;
-            margin: 0 auto;
-        }
-        
-        .close-zoom {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 35px;
-            height: 35px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
-            z-index: 10;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-        
-        .close-zoom:hover {
-            transform: scale(1.1);
-            background-color: var(--primary-color);
-        }
-        
-        .close-zoom::before,
-        .close-zoom::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 2px;
-            background-color: white;
-            border-radius: 2px;
-        }
-        
-        .close-zoom::before {
-            transform: rotate(45deg);
-        }
-        
-        .close-zoom::after {
-            transform: rotate(-45deg);
-        }
-        
-        .ultrasound-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.5;
-            z-index: 3;
-            mix-blend-mode: screen;
-        }
-        
-        .scan-line {
-            position: absolute;
-            height: 4px;
-            width: 100%;
-            background: linear-gradient(to right, 
-                rgba(255, 255, 255, 0), 
-                rgba(255, 255, 255, 0.9), 
-                rgba(255, 255, 255, 0));
-            top: 0;
-            left: 0;
-            box-shadow: 0 0 15px 5px rgba(127, 255, 212, 0.7);
-            opacity: 0.8;
-            z-index: 5;
-            animation: scan 3s linear infinite;
-            filter: blur(2px);
-        }
-        
-        .details {
-            position: relative;
-            width: 80%;
-            margin: 0 auto;
-            text-align: center;
-            z-index: 2;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .details-text {
-            margin-bottom: 30px;
-            line-height: 1.8;
-            font-size: 1.2rem;
-            position: relative;
-            padding: 15px 25px;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            color: var(--text-color);
-            font-weight: 400;
-        }
-        
-        .details-text::before,
-        .details-text::after {
-            content: '"';
-            font-size: 2.5rem;
-            font-family: Georgia, serif;
-            position: absolute;
-            color: var(--accent-color);
-            opacity: 0.3;
-        }
-        
-        .details-text::before {
-            top: -5px;
-            left: 5px;
-        }
-        
-        .details-text::after {
-            bottom: -25px;
-            right: 5px;
-        }
-        
-        .decorations {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .floating-element {
-            position: absolute;
-            opacity: 0;
-            z-index: 1;
-        }
-        
-        .balloon {
-            width: 40px;
-            height: 50px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            transform: translateY(0);
-            opacity: 0;
-        }
-        
-        .balloon:before {
-            content: "";
-            position: absolute;
-            width: 6px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.7);
-            bottom: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .button-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .support-button {
-            padding: 15px 35px;
-            background: linear-gradient(135deg, var(--accent-color), var(--primary-color), #FF99CC);
-            border: none;
-            border-radius: 30px;
-            color: white;
-            font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            letter-spacing: 1px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
-        }
-        
-        .support-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(255, 182, 193, 0.6);
-            letter-spacing: 1.5px;
-        }
-        
-        .support-button:active {
-            transform: translateY(-2px) scale(1.02);
-        }
-        
-        .support-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.7s;
-            z-index: -1;
-        }
-        
-        .support-button:hover::before {
-            left: 100%;
-        }
-        
-        .support-button::after {
-            content: '♥';
-            font-size: 1.2rem;
-            margin-left: 10px;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        
-        .support-button:hover::after {
-            opacity: 1;
-            transform: scale(1.2);
-        }
-        
-        .hearts-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        .heart {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            opacity: 0;
-            background-color: var(--primary-color);
-            transform: rotate(45deg);
-        }
-        
-        .heart:before,
-        .heart:after {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-        }
-        
-        .heart:before {
-            top: -10px;
-            left: 0;
-        }
-        
-        .heart:after {
-            top: 0;
-            left: -10px;
-        }
-        
-        .clouds {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 50px;
-            width: 80px;
-            height: 30px;
-            opacity: 0;
-        }
-        
-        .cloud:before,
-        .cloud:after {
-            content: '';
-            position: absolute;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
-        }
-        
-        .cloud:before {
-            width: 40px;
-            height: 40px;
-            top: -20px;
-            left: 10px;
-        }
-        
-        .cloud:after {
-            width: 30px;
-            height: 30px;
-            top: -15px;
-            right: 15px;
-        }
-        
-        .sparkle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: white;
-            border-radius: 50%;
-            filter: blur(1px);
-            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
-            opacity: 0;
-        }
-        
-        /* Language toggle */
-        .language-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 30px;
-            padding: 5px 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .language-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-        }
-        
-        .toggle-label {
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin: 0 5px;
-            color: var(--text-color);
-        }
-        
-        .toggle-switch {
-            position: relative;
-            width: 40px;
-            height: 22px;
-            background: var(--accent-color);
-            border-radius: 30px;
-            margin: 0 5px;
-            transition: background 0.3s ease;
-        }
-        
-        .toggle-switch::before {
-            content: '';
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            background: white;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.3s ease;
-        }
-        
-        .toggle-switch.es::before {
-            transform: translateX(18px);
-        }
-        
-        .toggle-switch.es {
-            background: var(--secondary-color);
-        }
-        
-        @keyframes shine {
-            0% {
-                left: -100%;
-            }
-            20% {
-                left: 100%;
-            }
-            100% {
-                left: 100%;
-            }
-        }
-        
-        @keyframes scan {
-            0% {
-                top: 0%;
-            }
-            100% {
-                top: 100%;
-            }
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-        
-        /* Media queries for responsiveness */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .details-text {
-                font-size: 0.9rem;
-            }
-            
-            .support-button {
-                padding: 12px 25px;
-                font-size: 1rem;
-            }
-            
-            .card-container {
-                min-height: 85vh;
-            }
-            
-            .ultrasound-placeholder img {
-                min-width: 200px;
-            }
-            
-            .language-toggle {
-                top: 15px;
-                right: 15px;
-                transform: scale(0.9);
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .subtitle {
-                font-size: 0.9rem;
-            }
-            
-            .details-text {
-                font-size: 0.8rem;
-                padding: 10px 15px;
-            }
-            
-            .support-button {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-            
-            .card-container {
-                width: 95%;
-                min-height: 88vh;
-            }
-            
-            .ultrasound-placeholder img {
-                min-width: 150px;
-            }
-            
-            .header, .details, .ultrasound-container, .button-container {
-                margin-top: 15px;
-                margin-bottom: 15px;
-            }
-            
-            .language-toggle {
-                top: 10px;
-                right: 10px;
-                transform: scale(0.8);
-            }
-        }
-        
-        @media (max-height: 700px) {
-            .card {
-                padding-bottom: 30px;
-            }
-        }
-    </style>
+    }
+</style>
+```
+
 </head>
 <body>
-    <div id="particles-js" class="particles-js"></div>
-    
-    <div class="card-container">
-        <div class="card" id="baby-shower-card">
-            <div class="language-toggle" id="lang-toggle">
-                <span class="toggle-label">EN</span>
-                <div class="toggle-switch"></div>
-                <span class="toggle-label">ES</span>
-            </div>
-            
-            <div class="content-wrapper">
-                <div class="decorations">
-                    <!-- Hearts will be generated by JS -->
-                    <div class="hearts-container"></div>
-                    
-                    <!-- Clouds will be generated by JS -->
-                    <div class="clouds"></div>
-                    
-                    <!-- Sparkles will be generated by JS -->
-                    <div class="sparkles-container"></div>
-                </div>
-                
-                <div class="header">
-                    <h1 data-en="Erika's Baby Shower" data-es="Baby Shower de Erika">Erika's Baby Shower</h1>
-                    <p class="subtitle" data-en="A new life is about to begin" data-es="Una nueva vida está por comenzar">A new life is about to begin</p>
-                </div>
-                
-                <div class="ultrasound-container">
-                    <div class="ultrasound-frame">
-                        <div class="ultrasound-placeholder" id="zoom-trigger">
-                            <!-- Image with correct sizing -->
-                            <img 
-                                src="https://i.postimg.cc/bJZsyC4p/IMG-1513.gif" 
-                                alt="Baby ultrasound"
-                                onload="adjustContainerSize(this)">
-                            <div class="scan-line"></div>
-                        </div>
-                    </div>
-                    <div class="ultrasound-overlay"></div>
-                </div>
-                
-                <div class="details">
-                    <p class="details-text" data-en="Join us in celebrating this beautiful journey with Erika as she prepares to welcome her little miracle." data-es="Acompáñanos a celebrar este hermoso camino con Erika mientras se prepara para recibir a su pequeño milagro.">Join us in celebrating this beautiful journey with Erika as she prepares to welcome her little miracle.</p>
-                </div>
-                
-                <div class="button-container">
-                    <a href="https://my.babylist.com/christopher-velez" class="support-button" id="support-btn" data-en="Support Our Baby" data-es="Apoya a Nuestro Bebé">Support Our Baby</a>
+    <!-- Decorative elements -->
+    <div class="decorative-elements">
+        <div class="deco-element" style="top: 10%; left: 5%; font-size: 3rem;">✿</div>
+        <div class="deco-element" style="top: 20%; right: 10%; font-size: 2.5rem;">❀</div>
+        <div class="deco-element" style="bottom: 30%; left: 8%; font-size: 2rem;">✦</div>
+        <div class="deco-element" style="bottom: 20%; right: 5%; font-size: 3rem;">❋</div>
+        <div class="deco-element" style="top: 50%; left: 3%; font-size: 2.5rem;">✧</div>
+    </div>
+
+```
+<!-- Header -->
+<header class="header">
+    <div class="title-decoration">
+        <h1 class="princess-name">Our Little Princess Amaya</h1>
+    </div>
+    <div class="divider"></div>
+</header>
+
+<!-- Scrapbook pages -->
+<main class="scrapbook-pages">
+    <!-- Hand-drawn doodles -->
+    <svg class="doodle" style="top: 20px; left: 50px; width: 100px; height: 100px;" viewBox="0 0 100 100">
+        <path d="M20,50 Q50,20 80,50 T80,50" stroke="#E8B4B8" stroke-width="2" fill="none" opacity="0.3"/>
+    </svg>
+    <svg class="doodle" style="bottom: 50px; right: 80px; width: 80px; height: 80px;" viewBox="0 0 80 80">
+        <circle cx="40" cy="40" r="30" stroke="#9B59B6" stroke-width="2" fill="none" stroke-dasharray="5,5" opacity="0.3"/>
+    </svg>
+
+    <div class="photo-collection">
+        <!-- Photo 1 -->
+        <div class="photo-wrapper" onclick="openLightbox(0)">
+            <div class="tape tape-top"></div>
+            <div class="polaroid">
+                <div class="photo-content">
+                    <span class="photo-icon">👑</span>
                 </div>
             </div>
+            <div class="sticker-decoration">🌟</div>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="photo-wrapper" onclick="openLightbox(1)">
+            <div class="tape tape-corner"></div>
+            <div class="polaroid">
+                <div class="photo-content">
+                    <span class="photo-icon">🌸</span>
+                </div>
+            </div>
+            <div class="sticker-decoration">🦋</div>
+        </div>
+
+        <!-- Photo 3 -->
+        <div class="photo-wrapper" onclick="openLightbox(2)">
+            <div class="tape tape-top"></div>
+            <div class="polaroid">
+                <div class="photo-content">
+                    <span class="photo-icon">🌙</span>
+                </div>
+            </div>
+            <div class="sticker-decoration">💕</div>
+        </div>
+
+        <!-- Photo 4 -->
+        <div class="photo-wrapper" onclick="openLightbox(3)">
+            <div class="tape tape-corner"></div>
+            <div class="polaroid">
+                <div class="photo-content">
+                    <span class="photo-icon">🎀</span>
+                </div>
+            </div>
+            <div class="sticker-decoration">✨</div>
+        </div>
+
+        <!-- Photo 5 -->
+        <div class="photo-wrapper" onclick="openLightbox(4)">
+            <div class="tape tape-top"></div>
+            <div class="polaroid">
+                <div class="photo-content">
+                    <span class="photo-icon">🌈</span>
+                </div>
+            </div>
+            <div class="sticker-decoration">🌺</div>
+        </div>
+
+        <!-- Photo 6 -->
+        <div class="photo-wrapper" onclick="openLightbox(5)">
+            <div class="tape tape-corner"></div>
+            <div class="polaroid">
+                <div class="photo-content">
+                    <span class="photo-icon">💖</span>
+                </div>
+            </div>
+            <div class="sticker-decoration">🎈</div>
         </div>
     </div>
-    
-    <!-- Zoom Modal -->
-    <div class="zoom-modal" id="zoom-modal">
-        <div class="zoom-content">
-            <div class="close-zoom" id="close-zoom"></div>
-            <img src="https://i.postimg.cc/bJZsyC4p/IMG-1513.gif" alt="Zoomed ultrasound" class="zoom-image">
+
+    <!-- More doodles -->
+    <svg class="doodle" style="bottom: 100px; left: 60px; width: 120px; height: 60px;" viewBox="0 0 120 60">
+        <path d="M10,30 Q60,10 110,30" stroke="#FFB6C1" stroke-width="2" fill="none" opacity="0.3"/>
+    </svg>
+</main>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+        <div class="close-btn" onclick="closeLightbox(event)">✕</div>
+        <div class="lightbox-photo">
+            <span style="font-size: 6rem; opacity: 0.2;">👶</span>
         </div>
     </div>
-    
-    <script>
-        // Wait for the page to load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize particles.js
-            particlesJS('particles-js', {
-                "particles": {
-                    "number": {
-                        "value": 120,
-                        "density": {
-                            "enable": true,
-                            "value_area": 800
-                        }
-                    },
-                    "color": {
-                        "value": ["#FFD1DC", "#C6E6FB", "#FFB6C1", "#FFF0F5", "#FFC857", "#FFEFEF", "#E0F7FF"]
-                    },
-                    "shape": {
-                        "type": ["circle", "triangle", "star", "heart"],
-                        "stroke": {
-                            "width": 0,
-                            "color": "#000000"
-                        }
-                    },
-                    "opacity": {
-                        "value": 0.7,
-                        "random": true,
-                        "anim": {
-                            "enable": true,
-                            "speed": 1.5,
-                            "opacity_min": 0.1,
-                            "sync": false
-                        }
-                    },
-                    "size": {
-                        "value": 6,
-                        "random": true,
-                        "anim": {
-                            "enable": true,
-                            "speed": 5,
-                            "size_min": 0.3,
-                            "sync": false
-                        }
-                    },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#FFD1DC",
-                        "opacity": 0.2,
-                        "width": 1
-                    },
-                    "move": {
-                        "enable": true,
-                        "speed": 2.5,
-                        "direction": "none",
-                        "random": true,
-                        "straight": false,
-                        "out_mode": "bounce",
-                        "bounce": false,
-                        "attract": {
-                            "enable": true,
-                            "rotateX": 600,
-                            "rotateY": 1200
-                        }
-                    }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "repulse"
-                        },
-                        "onclick": {
-                            "enable": true,
-                            "mode": "bubble"
-                        },
-                        "resize": true
-                    },
-                    "modes": {
-                        "grab": {
-                            "distance": 200,
-                            "line_linked": {
-                                "opacity": 0.3
-                            }
-                        },
-                        "bubble": {
-                            "distance": 250,
-                            "size": 12,
-                            "duration": 3,
-                            "opacity": 0.8,
-                            "speed": 5
-                        },
-                        "repulse": {
-                            "distance": 100,
-                            "duration": 0.4
-                        },
-                        "push": {
-                            "particles_nb": 8
-                        },
-                        "remove": {
-                            "particles_nb": 2
-                        }
-                    }
-                },
-                "retina_detect": true
-            });
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>♡ Forever Our Little Princess ♡</p>
+</footer>
+
+<script>
+    // Lightbox functions
+    function openLightbox(index) {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(event) {
+        event.stopPropagation();
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Add subtle animation to decorative elements on load
+    document.addEventListener('DOMContentLoaded', function() {
+        const photos = document.querySelectorAll('.photo-wrapper');
+        photos.forEach((photo, index) => {
+            photo.style.opacity = '0';
+            photo.style.transform = `translateY(50px) rotate(${photo.style.getPropertyValue('--rotation')})`;
             
-            // Create decorative elements
-            createDecorations();
-            
-            // Initial animation sequence
             setTimeout(() => {
-                revealCard();
-            }, 500);
-            
-            // Set up button event listener with navigation
-            document.getElementById('support-btn').addEventListener('click', function(e) {
-                e.preventDefault();
-                triggerSupportAnimation();
-                // Smooth scroll to top of card if needed
-                document.getElementById('baby-shower-card').scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-                // Navigate to the support page after animation completes
-                setTimeout(() => {
-                    window.location.href = this.href;
-                }, 1500);
-            });
-            
-            // Force load the GIF image to ensure it's fully loaded
-            const ultrasoundImg = document.querySelector('.ultrasound-placeholder img');
-            if (ultrasoundImg) {
-                const newImg = new Image();
-                newImg.onload = function() {
-                    adjustContainerSize(ultrasoundImg);
-                };
-                newImg.src = ultrasoundImg.src;
-            }
-            
-            // Set up zoom functionality
-            setupZoom();
-            
-            // Set up language toggle
-            setupLanguageToggle();
+                photo.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                photo.style.opacity = '1';
+                photo.style.transform = `translateY(0) rotate(${photo.style.getPropertyValue('--rotation')})`;
+            }, index * 100);
         });
+
+        // Parallax effect for decorative elements
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            
+            document.querySelectorAll('.deco-element').forEach((el, index) => {
+                const speed = (index + 1) * 5;
+                el.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+    });
+
+    // Add paper texture effect
+    const scrapbook = document.querySelector('.scrapbook-pages');
+    scrapbook.addEventListener('mousemove', (e) => {
+        const rect = scrapbook.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
         
-        // Function to adjust container size based on image dimensions
-        function adjustContainerSize(img) {
-            // Get the ultrasound container and frame
-            const container = document.querySelector('.ultrasound-container');
-            const placeholder = document.querySelector('.ultrasound-placeholder');
-            
-            // Wait for image to be fully loaded
-            if (img.complete) {
-                // Set maximum displayed height for the image
-                const maxDisplayHeight = 400;
-                
-                // Set displayed dimensions to be larger
-                const displayedWidth = Math.min(img.naturalWidth * 1.6, window.innerWidth * 0.8);
-                const heightRatio = img.naturalHeight / img.naturalWidth;
-                const displayedHeight = Math.min(displayedWidth * heightRatio, maxDisplayHeight);
-                
-                // Apply dimensions to image
-                img.style.width = `${displayedWidth}px`;
-                img.style.height = `${displayedHeight}px`;
-                
-                // Center the container in the card
-                container.style.display = 'flex';
-                container.style.margin = '35px auto';
-                
-                // Make the placeholder fit the image exactly
-                placeholder.style.width = 'auto';
-                placeholder.style.height = 'auto';
-                
-                // Reveal the container properly
-                anime({
-                    targets: '.ultrasound-container',
-                    opacity: [0, 1],
-                    scale: [0.9, 1],
-                    easing: 'easeOutExpo',
-                    duration: 1200
-                });
-            }
-        }
-        
-        // Setup zoom functionality
-        function setupZoom() {
-            const zoomTrigger = document.getElementById('zoom-trigger');
-            const zoomModal = document.getElementById('zoom-modal');
-            const closeZoom = document.getElementById('close-zoom');
-            
-            // Open modal on click
-            zoomTrigger.addEventListener('click', function() {
-                zoomModal.classList.add('active');
-                
-                // Create zoom-in animation
-                anime({
-                    targets: '.zoom-content',
-                    scale: [0.7, 1],
-                    opacity: [0, 1],
-                    duration: 500,
-                    easing: 'easeOutCubic'
-                });
-            });
-            
-            // Close modal when clicking the close button
-            closeZoom.addEventListener('click', function() {
-                closeZoomModal();
-            });
-            
-            // Close modal when clicking outside the image
-            zoomModal.addEventListener('click', function(e) {
-                if (e.target === zoomModal) {
-                    closeZoomModal();
-                }
-            });
-            
-            // Function to close the zoom modal
-            function closeZoomModal() {
-                anime({
-                    targets: '.zoom-content',
-                    scale: [1, 0.7],
-                    opacity: [1, 0],
-                    duration: 300,
-                    easing: 'easeInCubic',
-                    complete: function() {
-                        zoomModal.classList.remove('active');
-                    }
-                });
-            }
-        }
-        
-        // Setup language toggle
-        function setupLanguageToggle() {
-            const toggle = document.getElementById('lang-toggle');
-            const toggleSwitch = toggle.querySelector('.toggle-switch');
-            let isSpanish = false;
-            
-            toggle.addEventListener('click', function() {
-                isSpanish = !isSpanish;
-                
-                if (isSpanish) {
-                    toggleSwitch.classList.add('es');
-                    document.querySelector('.ultrasound-placeholder').classList.add('es');
-                    changeLanguage('es');
-                } else {
-                    toggleSwitch.classList.remove('es');
-                    document.querySelector('.ultrasound-placeholder').classList.remove('es');
-                    changeLanguage('en');
-                }
-            });
-            
-            // Function to change text content based on language
-            function changeLanguage(lang) {
-                const elements = document.querySelectorAll('[data-en]');
-                
-                elements.forEach(element => {
-                    // Add a subtle animation effect
-                    anime({
-                        targets: element,
-                        opacity: [1, 0, 1],
-                        translateY: [0, -10, 0],
-                        duration: 600,
-                        easing: 'easeInOutQuad',
-                        update: function(anim) {
-                            // Change text at halfway point of animation
-                            if (anim.progress >= 50 && element.dataset.currentLang !== lang) {
-                                element.textContent = element.getAttribute(`data-${lang}`);
-                                element.dataset.currentLang = lang;
-                            }
-                        }
-                    });
-                });
-            }
-        }
-        
-        // Function to create decorative elements
-        function createDecorations() {
-            // Create hearts
-            const heartsContainer = document.querySelector('.hearts-container');
-            for (let i = 0; i < 15; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.style.left = `${Math.random() * 100}%`;
-                heart.style.top = `${Math.random() * 100}%`;
-                heart.style.transform = `rotate(45deg) scale(${0.5 + Math.random() * 0.5})`;
-                heartsContainer.appendChild(heart);
-            }
-            
-            // Create clouds
-            const cloudsContainer = document.querySelector('.clouds');
-            for (let i = 0; i < 5; i++) {
-                const cloud = document.createElement('div');
-                cloud.classList.add('cloud');
-                cloud.style.left = `${Math.random() * 100}%`;
-                cloud.style.top = `${Math.random() * 60}%`;
-                cloud.style.transform = `scale(${0.5 + Math.random() * 0.5})`;
-                cloudsContainer.appendChild(cloud);
-            }
-            
-            // Create sparkles
-            const sparklesContainer = document.querySelector('.sparkles-container');
-            for (let i = 0; i < 30; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.classList.add('sparkle');
-                sparkle.style.left = `${Math.random() * 100}%`;
-                sparkle.style.top = `${Math.random() * 100}%`;
-                sparkle.style.transform = `scale(${0.2 + Math.random() * 0.8})`;
-                sparklesContainer.appendChild(sparkle);
-            }
-        }
-        
-        // Main card reveal animation
-        function revealCard() {
-            // Main card animation
-            anime({
-                targets: '.card',
-                opacity: [0, 1],
-                scale: [0.8, 1],
-                rotateY: [15, 0],
-                easing: 'easeOutExpo',
-                duration: 1500
-            });
-            
-            // Header animation
-            anime({
-                targets: '.header',
-                opacity: [0, 1],
-                translateY: [-20, 0],
-                easing: 'easeOutExpo',
-                duration: 1200,
-                delay: 500
-            });
-            
-            // Ultrasound container animation handled by adjustContainerSize
-            
-            // Details animation
-            anime({
-                targets: '.details',
-                opacity: [0, 1],
-                translateY: [20, 0],
-                easing: 'easeOutExpo',
-                duration: 1200,
-                delay: 1000
-            });
-            
-            // Button container animation
-            anime({
-                targets: '.button-container',
-                opacity: [0, 1],
-                translateY: [20, 0],
-                easing: 'easeOutExpo',
-                duration: 1200,
-                delay: 1200
-            });
-            
-            // Language toggle animation
-            anime({
-                targets: '.language-toggle',
-                opacity: [0, 1],
-                translateY: [-20, 0],
-                easing: 'easeOutExpo',
-                duration: 1000,
-                delay: 1400
-            });
-            
-            // Animate decorative elements
-            animateDecorations();
-        }
-        
-        // Animation for decorative elements
-        function animateDecorations() {
-            // Animate hearts
-            anime({
-                targets: '.heart',
-                opacity: [0, 0.7],
-                scale: [0, 1],
-                delay: anime.stagger(200, {start: 1000}),
-                endDelay: 500,
-                direction: 'alternate',
-                loop: true,
-                easing: 'easeInOutQuad'
-            });
-            
-            // Animate clouds
-            anime({
-                targets: '.cloud',
-                opacity: [0, 0.7],
-                translateX: ['-30px', '30px'],
-                delay: anime.stagger(400, {start: 1500}),
-                duration: 8000,
-                loop: true,
-                direction: 'alternate',
-                easing: 'easeInOutQuad'
-            });
-            
-            // Animate sparkles
-            anime({
-                targets: '.sparkle',
-                opacity: [0, 0.8, 0],
-                scale: [0.2, 1, 0.2],
-                delay: anime.stagger(200, {start: 2000, from: 'random'}),
-                duration: 3000,
-                loop: true,
-                easing: 'easeInOutSine'
-            });
-        }
-        
-        // Support button animation
-        function triggerSupportAnimation() {
-            // Combined animation effects for a more premium experience
-            
-            // Create heart burst effect
-            for (let i = 0; i < 50; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('floating-element');
-                
-                // Randomly choose between heart shapes and confetti
-                if (Math.random() > 0.6) {
-                    // Create heart shape
-                    heart.style.width = `${10 + Math.random() * 15}px`;
-                    heart.style.height = `${10 + Math.random() * 15}px`;
-                    heart.style.background = `hsl(${Math.random() * 20 + 340}, 100%, ${70 + Math.random() * 20}%)`;
-                    heart.style.borderRadius = "50% 50% 0 0";
-                    heart.style.transform = `rotate(45deg) scale(${0.5 + Math.random()})`;
-                    heart.style.boxShadow = "0 0 10px rgba(255, 182, 193, 0.7)";
-                    
-                    // Create the heart shape with pseudo-elements
-                    const before = document.createElement('div');
-                    before.style.position = 'absolute';
-                    before.style.width = '100%';
-                    before.style.height = '100%';
-                    before.style.background = heart.style.background;
-                    before.style.borderRadius = '50%';
-                    before.style.top = '0';
-                    before.style.left = '-50%';
-                    
-                    const after = document.createElement('div');
-                    after.style.position = 'absolute';
-                    after.style.width = '100%';
-                    after.style.height = '100%';
-                    after.style.background = heart.style.background;
-                    after.style.borderRadius = '50%';
-                    after.style.top = '-50%';
-                    after.style.left = '0';
-                    
-                    heart.appendChild(before);
-                    heart.appendChild(after);
-                } else {
-                    // Create confetti
-                    heart.style.width = `${5 + Math.random() * 10}px`;
-                    heart.style.height = `${5 + Math.random() * 10}px`;
-                    heart.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                    heart.style.background = `hsl(${Math.random() * 360}, 100%, ${70 + Math.random() * 20}%)`;
-                    heart.style.boxShadow = "0 0 8px rgba(255, 255, 255, 0.7)";
-                }
-                
-                heart.style.left = `${Math.random() * 100}%`;
-                heart.style.top = `${Math.random() * 100}%`;
-                document.querySelector('.decorations').appendChild(heart);
-            }
-            
-            // Animate the floating elements with more varied and natural movement
-            anime({
-                targets: '.floating-element',
-                opacity: [0, 1, 0],
-                translateY: function() {
-                    return [anime.random(0, 50), anime.random(-150, -300)];
-                },
-                translateX: function() {
-                    return [0, anime.random(-100, 100)];
-                },
-                rotate: function() {
-                    return anime.random(-720, 720);
-                },
-                scale: function() {
-                    return [1, anime.random(0.5, 2)];
-                },
-                delay: anime.stagger(40, {from: 'center'}),
-                duration: function() {
-                    return anime.random(2000, 4000);
-                },
-                easing: 'easeOutExpo',
-                complete: function() {
-                    // Remove elements after animation
-                    document.querySelectorAll('.floating-element').forEach(el => {
-                        el.remove();
-                    });
-                }
-            });
-            
-            // Premium ultrasound animation
-            anime({
-                targets: '.ultrasound-placeholder',
-                scale: [1, 1.1, 1],
-                filter: [
-                    'brightness(1) contrast(1)',
-                    'brightness(1.3) contrast(1.1)',
-                    'brightness(1) contrast(1)'
-                ],
-                duration: 2500,
-                easing: 'easeInOutCubic'
-            });
-            
-            // Enhanced glow effect on the ultrasound frame
-            anime({
-                targets: '.ultrasound-frame',
-                boxShadow: [
-                    '0 0 0 rgba(255, 182, 193, 0)',
-                    '0 0 30px 10px rgba(255, 182, 193, 0.8)',
-                    '0 0 0 rgba(255, 182, 193, 0)'
-                ],
-                backgroundColor: [
-                    'linear-gradient(45deg, var(--secondary-color), var(--primary-color))',
-                    'linear-gradient(45deg, #FFD1DC, #FFC8DD)',
-                    'linear-gradient(45deg, var(--secondary-color), var(--primary-color))'
-                ],
-                duration: 2500,
-                easing: 'easeInOutSine'
-            });
-            
-            // Create a "Thank you" message
-            const message = document.createElement('div');
-            message.style.position = 'absolute';
-            message.style.top = '50%';
-            message.style.left = '50%';
-            message.style.transform = 'translate(-50%, -50%) scale(0)';
-            message.style.fontSize = '2.2rem';
-            message.style.fontWeight = 'bold';
-            message.style.color = 'var(--accent-color)';
-            message.style.textShadow = '0 0 15px rgba(255,255,255,0.9)';
-            message.style.opacity = '0';
-            message.style.zIndex = '10';
-            message.style.background = 'rgba(255,255,255,0.7)';
-            message.style.padding = '15px 30px';
-            message.style.borderRadius = '15px';
-            message.style.backdropFilter = 'blur(5px)';
-            
-            // Set message text based on current language
-            const isSpanish = document.querySelector('.toggle-switch').classList.contains('es');
-            message.textContent = isSpanish ? '¡Gracias!' : 'Thank You!';
-            
-            document.querySelector('.card').appendChild(message);
-            
-            // Animate the message with a more dynamic effect
-            anime({
-                targets: message,
-                scale: [0, 1.3, 1],
-                opacity: [0, 1, 0],
-                duration: 3000,
-                easing: 'easeOutElastic(1, .5)',
-                complete: function() {
-                    message.remove();
-                }
-            });
-            
-            // Create sparkle burst around the ultrasound
-            for (let i = 0; i < 30; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.classList.add('sparkle');
-                sparkle.style.width = `${2 + Math.random() * 5}px`;
-                sparkle.style.height = `${2 + Math.random() * 5}px`;
-                sparkle.style.backgroundColor = Math.random() > 0.5 ? '#FFF' : '#FFD1DC';
-                sparkle.style.boxShadow = `0 0 ${5 + Math.random() * 15}px ${Math.random() > 0.5 ? 'rgba(255,255,255,0.9)' : 'rgba(255,182,193,0.9)'}`;
-                sparkle.style.left = '50%';
-                sparkle.style.top = '40%';
-                document.querySelector('.decorations').appendChild(sparkle);
-            }
-            
-            // Animate the sparkles with a more dynamic, radial burst
-            anime({
-                targets: '.decorations .sparkle',
-                opacity: [0, 1, 0],
-                translateX: function() {
-                    return [0, anime.random(-200, 200)];
-                },
-                translateY: function() {
-                    return [0, anime.random(-200, 200)];
-                },
-                scale: [0.5, 2, 0],
-                duration: function() {
-                    return anime.random(1500, 3000);
-                },
-                easing: 'easeOutCubic',
-                delay: anime.stagger(10),
-                complete: function() {
-                    setTimeout(() => {
-                        document.querySelectorAll('.decorations .sparkle').forEach(el => {
-                            el.remove();
-                        });
-                    }, 1000);
-                }
-            });
-            
-            // Create ripple effect from button
-            const ripple = document.createElement('div');
-            ripple.style.position = 'absolute';
-            ripple.style.width = '10px';
-            ripple.style.height = '10px';
-            ripple.style.background = 'rgba(255,255,255,0.5)';
-            ripple.style.borderRadius = '50%';
-            ripple.style.left = '50%';
-            ripple.style.top = '80%';
-            ripple.style.transform = 'translate(-50%, -50%)';
-            document.querySelector('.card').appendChild(ripple);
-            
-            // Animate the ripple
-            anime({
-                targets: ripple,
-                scale: [0, 15],
-                opacity: [1, 0],
-                duration: 1500,
-                easing: 'easeOutExpo',
-                complete: function() {
-                    ripple.remove();
-                }
-            });
-        }
-    </script>
+        scrapbook.style.background = `
+            radial-gradient(circle at ${x}% ${y}%, rgba(255, 248, 220, 0.8), var(--paper)),
+            var(--paper)
+        `;
+    });
+</script>
+```
+
 </body>
 </html>
