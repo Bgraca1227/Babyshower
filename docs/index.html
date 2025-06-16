@@ -3,10 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Our Little Princess Amaya - Enchanted Memory Book</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Princess Amaya's Memory Book</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@200;300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&family=Playfair+Display:wght@400&display=swap');
 
 ```
     * {
@@ -17,1193 +19,864 @@
     }
 
     :root {
-        --aurora-pink: #FFB8D1;
-        --aurora-purple: #E1BEE7;
-        --aurora-blue: #B3E5FC;
-        --pearl-white: #FFF9FC;
-        --rose-quartz: #F8BBD0;
-        --amethyst: #CE93D8;
-        --celestial-blue: #81D4FA;
-        --opal: #F5F5F5;
-        --gold-dust: #FFE0B2;
-        --moonstone: #E8EAF6;
-        --gradient-1: linear-gradient(135deg, #FFB8D1 0%, #E1BEE7 50%, #B3E5FC 100%);
-        --gradient-2: linear-gradient(135deg, #F8BBD0 0%, #CE93D8 50%, #81D4FA 100%);
-        --gradient-3: linear-gradient(135deg, #FFE0B2 0%, #FFB8D1 50%, #E1BEE7 100%);
+        --soft-pink: #FFE4E9;
+        --lavender: #F3E5F5;
+        --sky-blue: #E3F2FD;
+        --cream: #FFF8E7;
+        --rose: #FFCDD2;
+        --purple: #E1BEE7;
+        --mint: #E0F2F1;
+        --gold: #FFE082;
+        --white: #FFFFFF;
+        --shadow: rgba(0, 0, 0, 0.08);
+        --text: #6B5B73;
+        --header-height: 120px;
+        --nav-height: 60px;
+        --safe-area-bottom: env(safe-area-inset-bottom, 20px);
     }
 
-    body {
+    html, body {
+        height: 100%;
+        overflow: hidden;
         font-family: 'Montserrat', sans-serif;
-        background: var(--pearl-white);
-        min-height: 100vh;
-        overflow-x: hidden;
-        position: relative;
-        touch-action: pan-y;
+        background: var(--cream);
+        color: var(--text);
     }
 
-    /* Ethereal background */
-    .ethereal-background {
-        position: fixed;
+    /* App container */
+    .app-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(180deg, var(--lavender) 0%, var(--cream) 30%, var(--soft-pink) 100%);
+    }
+
+    /* Subtle animated background */
+    .ambient-layer {
+        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -3;
+        opacity: 0.4;
+        pointer-events: none;
         overflow: hidden;
     }
 
-    .aurora-layer {
+    .gradient-orb {
         position: absolute;
-        width: 150%;
-        height: 150%;
-        top: -25%;
-        left: -25%;
-        opacity: 0.6;
-        filter: blur(60px);
-        animation: aurora-drift 30s ease-in-out infinite;
+        border-radius: 50%;
+        filter: blur(40px);
+        animation: float-gentle 20s infinite ease-in-out;
     }
 
-    .aurora-1 {
-        background: radial-gradient(ellipse at 20% 30%, var(--aurora-pink) 0%, transparent 50%);
+    .gradient-orb:nth-child(1) {
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, var(--rose), transparent);
+        top: -150px;
+        left: -150px;
     }
 
-    .aurora-2 {
-        background: radial-gradient(ellipse at 80% 70%, var(--aurora-purple) 0%, transparent 50%);
+    .gradient-orb:nth-child(2) {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, var(--purple), transparent);
+        bottom: -200px;
+        right: -200px;
         animation-delay: -10s;
-        animation-duration: 35s;
     }
 
-    .aurora-3 {
-        background: radial-gradient(ellipse at 50% 50%, var(--aurora-blue) 0%, transparent 60%);
-        animation-delay: -20s;
-        animation-duration: 40s;
+    .gradient-orb:nth-child(3) {
+        width: 250px;
+        height: 250px;
+        background: radial-gradient(circle, var(--sky-blue), transparent);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation-delay: -5s;
     }
 
-    @keyframes aurora-drift {
-        0%, 100% { transform: rotate(0deg) scale(1) translate(0, 0); }
-        33% { transform: rotate(120deg) scale(1.1) translate(10%, -10%); }
-        66% { transform: rotate(240deg) scale(0.9) translate(-10%, 10%); }
+    @keyframes float-gentle {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -30px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
     }
 
-    /* Crystalline overlay */
-    .crystal-overlay {
-        position: fixed;
+    /* Particle system */
+    .particle-system {
+        position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -2;
-        background: 
-            repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255, 255, 255, 0.03) 10deg, transparent 20deg),
-            repeating-conic-gradient(from 36deg at 50% 50%, transparent 0deg, rgba(255, 255, 255, 0.02) 10deg, transparent 20deg);
-        animation: crystal-shimmer 20s linear infinite;
-    }
-
-    @keyframes crystal-shimmer {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* Advanced particle system */
-    .particle-universe {
-        position: fixed;
         width: 100%;
         height: 100%;
         pointer-events: none;
-        z-index: 100;
-    }
-
-    .stardust {
-        position: absolute;
-        width: 2px;
-        height: 2px;
-        background: white;
-        border-radius: 50%;
-        box-shadow: 
-            0 0 10px rgba(255, 255, 255, 0.8),
-            0 0 20px rgba(255, 184, 209, 0.6),
-            0 0 30px rgba(225, 190, 231, 0.4);
-        animation: stardust-journey 20s linear infinite;
-    }
-
-    .magic-orb {
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 184, 209, 0.4) 40%, transparent 70%);
-        border-radius: 50%;
-        filter: blur(1px);
-        animation: orb-float 25s ease-in-out infinite;
-    }
-
-    .crystal-shard {
-        position: absolute;
-        width: 10px;
-        height: 20px;
-        background: linear-gradient(45deg, rgba(255, 255, 255, 0.9), rgba(179, 229, 252, 0.6));
-        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-        animation: shard-spin 15s linear infinite;
-    }
-
-    @keyframes stardust-journey {
-        0% {
-            transform: translateY(110vh) translateX(0) scale(0) rotate(0deg);
-            opacity: 0;
-        }
-        10% {
-            opacity: 1;
-        }
-        90% {
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-10vh) translateX(100px) scale(1.5) rotate(720deg);
-            opacity: 0;
-        }
-    }
-
-    @keyframes orb-float {
-        0%, 100% {
-            transform: translate(0, 0) scale(1);
-            opacity: 0.6;
-        }
-        25% {
-            transform: translate(50px, -100px) scale(1.2);
-            opacity: 0.8;
-        }
-        50% {
-            transform: translate(-30px, -200px) scale(0.8);
-            opacity: 0.7;
-        }
-        75% {
-            transform: translate(80px, -100px) scale(1.1);
-            opacity: 0.9;
-        }
-    }
-
-    @keyframes shard-spin {
-        0% {
-            transform: translateY(110vh) rotate(0deg);
-            opacity: 0;
-        }
-        10% {
-            opacity: 0.8;
-        }
-        90% {
-            opacity: 0.8;
-        }
-        100% {
-            transform: translateY(-10vh) rotate(1440deg);
-            opacity: 0;
-        }
-    }
-
-    /* Ornate header */
-    .header {
-        text-align: center;
-        padding: 60px 20px 40px;
-        position: relative;
-        z-index: 10;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.3) 100%);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-        overflow: hidden;
-    }
-
-    .header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 224, 178, 0.2) 0%, transparent 50%);
-        animation: header-glow 8s ease-in-out infinite;
-    }
-
-    @keyframes header-glow {
-        0%, 100% { transform: scale(1) rotate(0deg); }
-        50% { transform: scale(1.3) rotate(180deg); }
-    }
-
-    .crown-ensemble {
-        position: relative;
-        display: inline-block;
-        margin-bottom: 30px;
-    }
-
-    .crown-main {
-        font-size: 3.5rem;
-        background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700, #FFA500);
-        background-size: 200% 200%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
-        animation: crown-shine 3s ease-in-out infinite;
-        position: relative;
         z-index: 2;
     }
 
-    @keyframes crown-shine {
-        0%, 100% { 
-            background-position: 0% 50%;
-            transform: scale(1) translateY(0);
-        }
-        50% { 
-            background-position: 100% 50%;
-            transform: scale(1.15) translateY(-5px);
-        }
-    }
-
-    .crown-rays {
+    .particle {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 120px;
-        height: 120px;
-        z-index: 1;
-    }
-
-    .ray {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 2px;
-        height: 40px;
-        background: linear-gradient(to bottom, rgba(255, 215, 0, 0.8), transparent);
-        transform-origin: center bottom;
-        animation: ray-pulse 3s ease-in-out infinite;
-    }
-
-    .ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
-    .ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); }
-    .ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); }
-    .ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); }
-    .ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); }
-    .ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); }
-    .ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); }
-    .ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); }
-
-    @keyframes ray-pulse {
-        0%, 100% { height: 40px; opacity: 0.5; }
-        50% { height: 60px; opacity: 1; }
-    }
-
-    .princess-title {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2.8rem;
-        font-weight: 300;
-        background: var(--gradient-2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        letter-spacing: 3px;
-        position: relative;
-        padding: 0 40px;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .title-ornament {
-        position: absolute;
-        top: 50%;
-        width: 30px;
-        height: 30px;
-        transform: translateY(-50%);
-    }
-
-    .title-ornament svg {
-        width: 100%;
-        height: 100%;
-        fill: none;
-        stroke: url(#gradient);
-        stroke-width: 1.5;
-        opacity: 0.8;
-        animation: ornament-dance 4s ease-in-out infinite;
-    }
-
-    .title-ornament:first-child { left: 0; }
-    .title-ornament:last-child { right: 0; animation-delay: -2s; }
-
-    @keyframes ornament-dance {
-        0%, 100% { transform: translateY(-50%) rotate(0deg) scale(1); }
-        50% { transform: translateY(-50%) rotate(360deg) scale(1.2); }
-    }
-
-    /* Luxury divider */
-    .luxury-divider {
-        width: 250px;
-        height: 40px;
-        margin: 20px auto;
-        position: relative;
-    }
-
-    .divider-line {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: var(--gradient-1);
-        transform: translateY(-50%);
-    }
-
-    .divider-gem {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 30px;
-        height: 30px;
-        background: radial-gradient(circle at 30% 30%, var(--aurora-pink), var(--aurora-purple));
-        border-radius: 50%;
-        box-shadow: 
-            0 0 20px rgba(255, 184, 209, 0.6),
-            inset -2px -2px 5px rgba(0, 0, 0, 0.1),
-            inset 2px 2px 5px rgba(255, 255, 255, 0.6);
-        animation: gem-sparkle 3s ease-in-out infinite;
-    }
-
-    @keyframes gem-sparkle {
-        0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-        50% { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); }
-    }
-
-    /* Scrapbook container */
-    .scrapbook-realm {
-        position: relative;
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 30px 20px;
-        z-index: 10;
-    }
-
-    /* Floating photo gallery */
-    .photo-constellation {
-        position: relative;
-        min-height: 450px;
-        margin: 40px 0;
-        perspective: 1000px;
-    }
-
-    /* Ethereal photo cards */
-    .memory-crystal {
-        position: absolute;
-        width: 75%;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%) rotateY(var(--rotateY, 0deg)) rotateZ(var(--rotateZ, 0deg));
-        transform-style: preserve-3d;
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        cursor: pointer;
-        z-index: var(--z-index, 1);
-    }
-
-    .memory-crystal:nth-child(1) { --rotateZ: -4deg; --z-index: 6; }
-    .memory-crystal:nth-child(2) { --rotateZ: 3deg; --z-index: 5; --rotateY: 5deg; transform: translate(-47%, -47%) rotateY(5deg) rotateZ(3deg); }
-    .memory-crystal:nth-child(3) { --rotateZ: -3deg; --z-index: 4; --rotateY: -5deg; transform: translate(-53%, -53%) rotateY(-5deg) rotateZ(-3deg); }
-    .memory-crystal:nth-child(4) { --rotateZ: 5deg; --z-index: 3; transform: translate(-45%, -45%) rotateZ(5deg); }
-    .memory-crystal:nth-child(5) { --rotateZ: -5deg; --z-index: 2; transform: translate(-55%, -55%) rotateZ(-5deg); }
-    .memory-crystal:nth-child(6) { --rotateZ: 2deg; --z-index: 1; transform: translate(-50%, -58%) rotateZ(2deg); }
-
-    .memory-crystal.active {
-        transform: translate(-50%, -50%) rotateY(0deg) rotateZ(0deg) scale(1.1);
-        z-index: 50;
-    }
-
-    .crystal-frame {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-        padding: 18px 18px 80px 18px;
-        border-radius: 20px;
-        box-shadow: 
-            0 20px 60px rgba(0, 0, 0, 0.15),
-            0 0 0 1px rgba(255, 255, 255, 0.8) inset,
-            0 0 30px rgba(255, 184, 209, 0.2) inset;
-        position: relative;
-        overflow: visible;
-        backdrop-filter: blur(10px);
-    }
-
-    .crystal-frame::before {
-        content: '';
-        position: absolute;
-        top: -3px;
-        left: -3px;
-        right: -3px;
-        bottom: -3px;
-        background: var(--gradient-1);
-        border-radius: 22px;
-        z-index: -1;
-        opacity: 0.5;
-        filter: blur(5px);
-    }
-
-    /* Decorative elements */
-    .memory-embellishments {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
         pointer-events: none;
     }
 
-    .fairy-ribbon {
-        position: absolute;
-        width: 100px;
-        height: 35px;
-        top: -18px;
-        left: 50%;
-        transform: translateX(-50%) rotate(-2deg);
-        background: linear-gradient(90deg, 
-            transparent 0%, 
-            var(--rose-quartz) 10%, 
-            var(--aurora-pink) 50%, 
-            var(--rose-quartz) 90%, 
-            transparent 100%);
-        opacity: 0.8;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-
-    .fairy-ribbon::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-        animation: ribbon-shine 3s ease-in-out infinite;
-    }
-
-    @keyframes ribbon-shine {
-        0% { left: -100%; }
-        100% { left: 100%; }
-    }
-
-    .enchanted-gem {
-        position: absolute;
-        width: 40px;
-        height: 40px;
-        bottom: 15px;
-        right: 15px;
-        background: radial-gradient(circle at 30% 30%, var(--celestial-blue), var(--aurora-purple));
+    .sparkle {
+        width: 4px;
+        height: 4px;
+        background: white;
         border-radius: 50%;
-        box-shadow: 
-            0 5px 20px rgba(0, 0, 0, 0.2),
-            inset -3px -3px 7px rgba(0, 0, 0, 0.2),
-            inset 3px 3px 7px rgba(255, 255, 255, 0.7);
-        animation: gem-float 4s ease-in-out infinite;
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        animation: sparkle-fall 15s linear infinite;
     }
 
-    @keyframes gem-float {
-        0%, 100% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-5px) rotate(10deg); }
+    .floating-star {
+        width: 20px;
+        height: 20px;
+        opacity: 0.6;
+        animation: star-float 20s ease-in-out infinite;
     }
 
-    .corner-flourish {
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        top: -25px;
-        right: -25px;
-        opacity: 0.9;
-        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
-        animation: flourish-bloom 5s ease-in-out infinite;
+    .floating-star::before {
+        content: '✦';
+        font-size: 20px;
+        color: var(--gold);
+        filter: drop-shadow(0 0 3px rgba(255, 224, 130, 0.6));
     }
 
-    @keyframes flourish-bloom {
-        0%, 100% { transform: scale(0.9) rotate(-15deg); }
-        50% { transform: scale(1.1) rotate(15deg); }
-    }
-
-    /* Photo content area */
-    .memory-portal {
-        width: 100%;
-        height: 340px;
-        border-radius: 12px;
-        position: relative;
-        overflow: hidden;
-        background: var(--gradient-3);
-        box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
-    }
-
-    .portal-shimmer {
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: 
-            radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.4) 0%, transparent 50%);
-        animation: portal-swirl 6s linear infinite;
-    }
-
-    @keyframes portal-swirl {
-        0% { transform: rotate(0deg) scale(1); }
-        100% { transform: rotate(360deg) scale(1.2); }
-    }
-
-    .memory-icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 6rem;
-        opacity: 0.15;
-        z-index: 1;
-        animation: icon-breathe 4s ease-in-out infinite;
-    }
-
-    @keyframes icon-breathe {
-        0%, 100% { transform: translate(-50%, -50%) scale(1); }
-        50% { transform: translate(-50%, -50%) scale(1.1); }
-    }
-
-    /* Navigation orbs */
-    .navigation-constellation {
-        display: flex;
-        justify-content: center;
-        gap: 16px;
-        margin: 50px 0;
-        position: relative;
-    }
-
-    .nav-orb {
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--aurora-purple), var(--aurora-pink));
-        opacity: 0.4;
-        transition: all 0.4s ease;
-        cursor: pointer;
-        position: relative;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav-orb::before {
-        content: '';
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        right: -10px;
-        bottom: -10px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(255, 184, 209, 0.4), transparent);
-        opacity: 0;
-        transform: scale(0.5);
-        transition: all 0.4s ease;
-    }
-
-    .nav-orb.active {
-        opacity: 1;
-        transform: scale(1.3);
-        box-shadow: 
-            0 0 20px rgba(255, 184, 209, 0.6),
-            0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .nav-orb.active::before {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    /* Memory garden */
-    .memory-garden {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 248, 252, 0.8));
-        backdrop-filter: blur(20px);
-        border-radius: 30px;
-        padding: 40px 30px;
-        margin: 40px 0;
-        box-shadow: 
-            0 20px 50px rgba(0, 0, 0, 0.08),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.7),
-            inset 0 0 50px rgba(255, 184, 209, 0.1);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .garden-title {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.8rem;
-        text-align: center;
-        background: var(--gradient-2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 30px;
-        font-weight: 300;
-        letter-spacing: 2px;
-    }
-
-    .petal-collection {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        justify-content: center;
-    }
-
-    .memory-petal {
-        background: linear-gradient(135deg, var(--aurora-pink), var(--rose-quartz));
-        color: white;
-        padding: 10px 20px;
-        border-radius: 30px;
-        font-size: 0.9rem;
-        font-weight: 300;
-        letter-spacing: 1px;
-        box-shadow: 
-            0 5px 15px rgba(0, 0, 0, 0.1),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.3);
-        transform: translateY(30px);
-        opacity: 0;
-        animation: petal-bloom 0.6s ease-out forwards;
-        animation-delay: calc(var(--i) * 0.1s);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .memory-petal::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
-        transform: scale(0);
-        transition: transform 0.6s ease;
-    }
-
-    .memory-petal:hover::after {
-        transform: scale(1);
-    }
-
-    @keyframes petal-bloom {
-        to {
-            transform: translateY(0);
+    @keyframes sparkle-fall {
+        0% {
+            transform: translateY(-10px) translateX(0) scale(0);
+            opacity: 0;
+        }
+        10% {
             opacity: 1;
         }
-    }
-
-    /* Footer realm */
-    .footer-realm {
-        text-align: center;
-        padding: 80px 20px 100px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .footer-text {
-        font-size: 1.1rem;
-        color: var(--amethyst);
-        letter-spacing: 3px;
-        font-weight: 200;
-        position: relative;
-        z-index: 1;
-    }
-
-    .footer-stars {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-
-    .footer-star {
-        position: absolute;
-        font-size: 1.5rem;
-        opacity: 0.3;
-        animation: star-twinkle 3s ease-in-out infinite;
-    }
-
-    @keyframes star-twinkle {
-        0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
-        50% { opacity: 0.8; transform: scale(1.2) rotate(180deg); }
-    }
-
-    /* Touch ripple enhanced */
-    .touch-aurora {
-        position: fixed;
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(255, 184, 209, 0.6), rgba(225, 190, 231, 0.4), transparent);
-        pointer-events: none;
-        transform: translate(-50%, -50%) scale(0);
-        animation: aurora-ripple 0.8s ease-out;
-        z-index: 200;
-        filter: blur(2px);
-    }
-
-    @keyframes aurora-ripple {
-        to {
-            transform: translate(-50%, -50%) scale(3);
+        90% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(calc(100vh + 10px)) translateX(50px) scale(1.5);
             opacity: 0;
         }
     }
 
-    /* SVG definitions */
-    .svg-defs {
+    @keyframes star-float {
+        0%, 100% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+        25% {
+            transform: translate(20px, -20px) rotate(90deg);
+        }
+        50% {
+            transform: translate(-10px, -40px) rotate(180deg);
+        }
+        75% {
+            transform: translate(30px, -20px) rotate(270deg);
+        }
+    }
+
+    /* Compact header */
+    .header {
+        position: relative;
+        height: var(--header-height);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+        z-index: 10;
+    }
+
+    .crown-icon {
+        font-size: 2rem;
+        margin-bottom: 8px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        animation: crown-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes crown-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    .app-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        font-weight: 400;
+        background: linear-gradient(135deg, var(--text), var(--purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: 1px;
+    }
+
+    /* Content area */
+    .content-area {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Photo carousel */
+    .photo-carousel {
         position: absolute;
-        width: 0;
-        height: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .photo-container {
+        position: relative;
+        width: 100%;
+        max-width: 350px;
+        height: 450px;
+        perspective: 1000px;
+    }
+
+    .photo-card {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+    }
+
+    .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: white;
+        border-radius: 20px;
+        padding: 15px;
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.1),
+            0 1px 0 rgba(255, 255, 255, 0.9) inset;
+        transform-style: preserve-3d;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .photo-card.active {
+        z-index: 10;
+        transform: translateZ(0) rotateY(0deg);
+    }
+
+    .photo-card.prev {
+        transform: translateX(-80%) scale(0.85) rotateY(25deg);
+        opacity: 0.7;
+        z-index: 5;
+    }
+
+    .photo-card.next {
+        transform: translateX(80%) scale(0.85) rotateY(-25deg);
+        opacity: 0.7;
+        z-index: 5;
+    }
+
+    .photo-card.hidden {
+        transform: translateX(0) scale(0.7) translateZ(-200px);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Photo decoration */
+    .photo-decoration {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 30px;
+        background: linear-gradient(135deg, var(--rose) 0%, var(--purple) 100%);
+        opacity: 0.6;
+        border-radius: 3px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .photo-gem {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background: radial-gradient(circle at 30% 30%, var(--sky-blue), var(--purple));
+        border-radius: 50%;
+        box-shadow: 
+            0 3px 10px rgba(0, 0, 0, 0.2),
+            inset 2px 2px 4px rgba(255, 255, 255, 0.6);
+        animation: gem-shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes gem-shimmer {
+        0%, 100% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.1) rotate(5deg); }
+    }
+
+    .photo-content {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--lavender), var(--soft-pink));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .photo-icon {
+        font-size: 5rem;
+        opacity: 0.2;
+        user-select: none;
+    }
+
+    .photo-shimmer {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%);
+        animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    /* Navigation dots */
+    .nav-dots {
+        position: absolute;
+        bottom: calc(var(--nav-height) + 30px);
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 12px;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--purple);
+        opacity: 0.3;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .dot.active {
+        opacity: 1;
+        transform: scale(1.3);
+        background: linear-gradient(135deg, var(--purple), var(--rose));
+    }
+
+    /* Bottom navigation */
+    .bottom-nav {
+        position: relative;
+        height: var(--nav-height);
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding-bottom: var(--safe-area-bottom);
+        z-index: 10;
+    }
+
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: 8px 16px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        color: var(--text);
+        text-decoration: none;
+    }
+
+    .nav-item:active {
+        transform: scale(0.95);
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-icon {
+        font-size: 1.5rem;
+    }
+
+    .nav-label {
+        font-size: 0.75rem;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+    }
+
+    /* Touch feedback */
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+        transform: scale(0);
+        animation: ripple-expand 0.6s ease-out;
+        pointer-events: none;
+    }
+
+    @keyframes ripple-expand {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+
+    /* Loading animation */
+    .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+    }
+
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid var(--lavender);
+        border-top-color: var(--purple);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* Performance optimizations */
+    .hardware-accelerated {
+        transform: translateZ(0);
+        will-change: transform;
+    }
+
+    /* Responsive adjustments */
+    @media (max-height: 700px) {
+        .photo-container {
+            height: 380px;
+        }
+        .nav-dots {
+            bottom: calc(var(--nav-height) + 20px);
+        }
+    }
+
+    @media (max-width: 380px) {
+        .photo-container {
+            max-width: 300px;
+        }
     }
 </style>
 ```
 
 </head>
 <body>
-    <!-- SVG definitions -->
-    <svg class="svg-defs">
-        <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#FFB8D1;stop-opacity:1" />
-                <stop offset="50%" style="stop-color:#E1BEE7;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#B3E5FC;stop-opacity:1" />
-            </linearGradient>
-        </defs>
-    </svg>
+    <div class="app-container">
+        <!-- Ambient background -->
+        <div class="ambient-layer">
+            <div class="gradient-orb"></div>
+            <div class="gradient-orb"></div>
+            <div class="gradient-orb"></div>
+        </div>
 
 ```
-<!-- Ethereal background -->
-<div class="ethereal-background">
-    <div class="aurora-layer aurora-1"></div>
-    <div class="aurora-layer aurora-2"></div>
-    <div class="aurora-layer aurora-3"></div>
+    <!-- Particle system -->
+    <div class="particle-system" id="particleSystem"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="crown-icon">👑</div>
+        <h1 class="app-title">Princess Amaya's Memories</h1>
+    </header>
+
+    <!-- Content area -->
+    <main class="content-area">
+        <!-- Photo carousel -->
+        <div class="photo-carousel">
+            <div class="photo-container" id="photoContainer">
+                <!-- Photos will be dynamically positioned -->
+                <div class="photo-card active" data-index="0">
+                    <div class="card-inner">
+                        <div class="photo-decoration"></div>
+                        <div class="photo-gem"></div>
+                        <div class="photo-content">
+                            <div class="photo-shimmer"></div>
+                            <span class="photo-icon">🌸</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="photo-card next" data-index="1">
+                    <div class="card-inner">
+                        <div class="photo-decoration" style="background: linear-gradient(135deg, var(--sky-blue) 0%, var(--mint) 100%);"></div>
+                        <div class="photo-gem" style="background: radial-gradient(circle at 30% 30%, var(--gold), var(--rose));"></div>
+                        <div class="photo-content">
+                            <div class="photo-shimmer"></div>
+                            <span class="photo-icon">👶</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="photo-card hidden" data-index="2">
+                    <div class="card-inner">
+                        <div class="photo-decoration" style="background: linear-gradient(135deg, var(--purple) 0%, var(--sky-blue) 100%);"></div>
+                        <div class="photo-gem" style="background: radial-gradient(circle at 30% 30%, var(--mint), var(--lavender));"></div>
+                        <div class="photo-content">
+                            <div class="photo-shimmer"></div>
+                            <span class="photo-icon">🌙</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="photo-card hidden" data-index="3">
+                    <div class="card-inner">
+                        <div class="photo-decoration" style="background: linear-gradient(135deg, var(--gold) 0%, var(--rose) 100%);"></div>
+                        <div class="photo-gem"></div>
+                        <div class="photo-content">
+                            <div class="photo-shimmer"></div>
+                            <span class="photo-icon">🎀</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="photo-card hidden" data-index="4">
+                    <div class="card-inner">
+                        <div class="photo-decoration"></div>
+                        <div class="photo-gem" style="background: radial-gradient(circle at 30% 30%, var(--purple), var(--rose));"></div>
+                        <div class="photo-content">
+                            <div class="photo-shimmer"></div>
+                            <span class="photo-icon">🌈</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="photo-card hidden" data-index="5">
+                    <div class="card-inner">
+                        <div class="photo-decoration" style="background: linear-gradient(135deg, var(--mint) 0%, var(--gold) 100%);"></div>
+                        <div class="photo-gem" style="background: radial-gradient(circle at 30% 30%, var(--lavender), var(--sky-blue));"></div>
+                        <div class="photo-content">
+                            <div class="photo-shimmer"></div>
+                            <span class="photo-icon">💕</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation dots -->
+            <div class="nav-dots" id="navDots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
+                <span class="dot" data-index="5"></span>
+            </div>
+        </div>
+
+        <!-- Loading spinner -->
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+        </div>
+    </main>
+
+    <!-- Bottom navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item" onclick="event.preventDefault(); showToast('Gallery')">
+            <span class="nav-icon">🖼️</span>
+            <span class="nav-label">Gallery</span>
+        </a>
+        <a href="#" class="nav-item" onclick="event.preventDefault(); showToast('Favorites')">
+            <span class="nav-icon">⭐</span>
+            <span class="nav-label">Favorites</span>
+        </a>
+        <a href="#" class="nav-item" onclick="event.preventDefault(); showToast('Share')">
+            <span class="nav-icon">💝</span>
+            <span class="nav-label">Share</span>
+        </a>
+    </nav>
 </div>
-<div class="crystal-overlay"></div>
-
-<!-- Particle universe -->
-<div class="particle-universe" id="particleUniverse"></div>
-
-<!-- Header -->
-<header class="header">
-    <div class="crown-ensemble">
-        <div class="crown-rays">
-            <div class="ray"></div>
-            <div class="ray"></div>
-            <div class="ray"></div>
-            <div class="ray"></div>
-            <div class="ray"></div>
-            <div class="ray"></div>
-            <div class="ray"></div>
-            <div class="ray"></div>
-        </div>
-        <div class="crown-main">👑</div>
-    </div>
-    <h1 class="princess-title">
-        <span class="title-ornament">
-            <svg viewBox="0 0 50 50">
-                <path d="M25,5 Q15,25 25,45 Q35,25 25,5 M15,25 Q25,15 35,25 Q25,35 15,25" />
-            </svg>
-        </span>
-        Our Little Princess Amaya
-        <span class="title-ornament">
-            <svg viewBox="0 0 50 50">
-                <path d="M25,5 Q35,25 25,45 Q15,25 25,5 M35,25 Q25,15 15,25 Q25,35 35,25" />
-            </svg>
-        </span>
-    </h1>
-    <div class="luxury-divider">
-        <div class="divider-line"></div>
-        <div class="divider-gem"></div>
-    </div>
-</header>
-
-<!-- Scrapbook realm -->
-<main class="scrapbook-realm">
-    <!-- Photo constellation -->
-    <div class="photo-constellation" id="photoConstellation">
-        <!-- Memory Crystal 1 -->
-        <div class="memory-crystal" data-index="0">
-            <div class="crystal-frame">
-                <div class="memory-embellishments">
-                    <div class="fairy-ribbon"></div>
-                    <div class="enchanted-gem"></div>
-                    <div class="corner-flourish">✿</div>
-                </div>
-                <div class="memory-portal">
-                    <div class="portal-shimmer"></div>
-                    <span class="memory-icon">🌸</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Memory Crystal 2 -->
-        <div class="memory-crystal" data-index="1">
-            <div class="crystal-frame">
-                <div class="memory-embellishments">
-                    <div class="fairy-ribbon" style="background: linear-gradient(90deg, transparent 0%, var(--aurora-purple) 10%, var(--amethyst) 50%, var(--aurora-purple) 90%, transparent 100%);"></div>
-                    <div class="enchanted-gem" style="background: radial-gradient(circle at 30% 30%, var(--aurora-pink), var(--rose-quartz));"></div>
-                    <div class="corner-flourish">🦋</div>
-                </div>
-                <div class="memory-portal">
-                    <div class="portal-shimmer"></div>
-                    <span class="memory-icon">👶</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Memory Crystal 3 -->
-        <div class="memory-crystal" data-index="2">
-            <div class="crystal-frame">
-                <div class="memory-embellishments">
-                    <div class="fairy-ribbon" style="background: linear-gradient(90deg, transparent 0%, var(--celestial-blue) 10%, var(--aurora-blue) 50%, var(--celestial-blue) 90%, transparent 100%);"></div>
-                    <div class="enchanted-gem" style="background: radial-gradient(circle at 30% 30%, var(--gold-dust), var(--aurora-pink));"></div>
-                    <div class="corner-flourish">⭐</div>
-                </div>
-                <div class="memory-portal">
-                    <div class="portal-shimmer"></div>
-                    <span class="memory-icon">🌙</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Memory Crystal 4 -->
-        <div class="memory-crystal" data-index="3">
-            <div class="crystal-frame">
-                <div class="memory-embellishments">
-                    <div class="fairy-ribbon" style="background: linear-gradient(90deg, transparent 0%, var(--gold-dust) 10%, var(--aurora-pink) 50%, var(--gold-dust) 90%, transparent 100%);"></div>
-                    <div class="enchanted-gem"></div>
-                    <div class="corner-flourish">🌺</div>
-                </div>
-                <div class="memory-portal">
-                    <div class="portal-shimmer"></div>
-                    <span class="memory-icon">🎀</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Memory Crystal 5 -->
-        <div class="memory-crystal" data-index="4">
-            <div class="crystal-frame">
-                <div class="memory-embellishments">
-                    <div class="fairy-ribbon"></div>
-                    <div class="enchanted-gem" style="background: radial-gradient(circle at 30% 30%, var(--moonstone), var(--aurora-blue));"></div>
-                    <div class="corner-flourish">✨</div>
-                </div>
-                <div class="memory-portal">
-                    <div class="portal-shimmer"></div>
-                    <span class="memory-icon">🌈</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Memory Crystal 6 -->
-        <div class="memory-crystal" data-index="5">
-            <div class="crystal-frame">
-                <div class="memory-embellishments">
-                    <div class="fairy-ribbon" style="background: linear-gradient(90deg, transparent 0%, var(--rose-quartz) 10%, var(--aurora-pink) 50%, var(--rose-quartz) 90%, transparent 100%);"></div>
-                    <div class="enchanted-gem" style="background: radial-gradient(circle at 30% 30%, var(--aurora-purple), var(--amethyst));"></div>
-                    <div class="corner-flourish">💖</div>
-                </div>
-                <div class="memory-portal">
-                    <div class="portal-shimmer"></div>
-                    <span class="memory-icon">👨‍👩‍👧</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navigation constellation -->
-    <div class="navigation-constellation" id="navConstellation">
-        <div class="nav-orb active" data-index="0"></div>
-        <div class="nav-orb" data-index="1"></div>
-        <div class="nav-orb" data-index="2"></div>
-        <div class="nav-orb" data-index="3"></div>
-        <div class="nav-orb" data-index="4"></div>
-        <div class="nav-orb" data-index="5"></div>
-    </div>
-
-    <!-- Memory garden -->
-    <div class="memory-garden">
-        <h2 class="garden-title">Precious Moments</h2>
-        <div class="petal-collection">
-            <span class="memory-petal" style="--i: 0">First Smile</span>
-            <span class="memory-petal" style="--i: 1">Tiny Fingers</span>
-            <span class="memory-petal" style="--i: 2">Sweet Dreams</span>
-            <span class="memory-petal" style="--i: 3">Giggles</span>
-            <span class="memory-petal" style="--i: 4">First Steps</span>
-            <span class="memory-petal" style="--i: 5">Cuddles</span>
-            <span class="memory-petal" style="--i: 6">Love</span>
-        </div>
-    </div>
-</main>
-
-<!-- Footer realm -->
-<footer class="footer-realm">
-    <div class="footer-stars">
-        <span class="footer-star" style="top: 20%; left: 10%; animation-delay: 0s;">✦</span>
-        <span class="footer-star" style="top: 60%; left: 80%; animation-delay: 1s;">✧</span>
-        <span class="footer-star" style="top: 40%; left: 30%; animation-delay: 2s;">✦</span>
-        <span class="footer-star" style="top: 80%; left: 60%; animation-delay: 0.5s;">✧</span>
-        <span class="footer-star" style="top: 10%; left: 90%; animation-delay: 1.5s;">✦</span>
-    </div>
-    <p class="footer-text">✧ Forever Our Little Princess ✧</p>
-</footer>
 
 <script>
-    // Advanced particle system
-    class MagicalParticleSystem {
+    // Particle System
+    class ParticleSystem {
         constructor() {
-            this.universe = document.getElementById('particleUniverse');
-            this.particles = [];
+            this.container = document.getElementById('particleSystem');
             this.init();
         }
 
         init() {
-            // Create initial particle burst
-            this.createInitialParticles();
-            
-            // Continuous particle generation
+            // Create initial particles
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => this.createParticle(), i * 200);
+            }
+
+            // Continuously create particles
             setInterval(() => {
-                if (Math.random() > 0.5) this.createParticle('stardust');
-                if (Math.random() > 0.8) this.createParticle('magic-orb');
-                if (Math.random() > 0.9) this.createParticle('crystal-shard');
-            }, 1500);
+                if (Math.random() > 0.7) this.createParticle();
+            }, 2000);
         }
 
-        createInitialParticles() {
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => this.createParticle('stardust'), i * 100);
-            }
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => this.createParticle('magic-orb'), i * 200);
-            }
-            for (let i = 0; i < 10; i++) {
-                setTimeout(() => this.createParticle('crystal-shard'), i * 150);
-            }
-        }
-
-        createParticle(type) {
+        createParticle() {
+            const types = ['sparkle', 'floating-star'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            
             const particle = document.createElement('div');
-            particle.className = type;
-            
-            // Random positioning
+            particle.className = `particle ${type}`;
             particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
             
-            // Random animation properties
-            const duration = 15 + Math.random() * 15;
-            const delay = Math.random() * 5;
+            this.container.appendChild(particle);
             
-            particle.style.animationDuration = duration + 's';
-            particle.style.animationDelay = delay + 's';
-            
-            // Special properties for different types
-            if (type === 'magic-orb') {
-                particle.style.width = (20 + Math.random() * 20) + 'px';
-                particle.style.height = particle.style.width;
-            }
-            
-            this.universe.appendChild(particle);
-            
-            // Clean up after animation
-            setTimeout(() => {
-                particle.remove();
-            }, (duration + delay) * 1000);
+            // Remove after animation
+            setTimeout(() => particle.remove(), 20000);
         }
     }
 
-    // Photo constellation controller
-    class PhotoConstellation {
+    // Photo Carousel Controller
+    class PhotoCarousel {
         constructor() {
-            this.crystals = document.querySelectorAll('.memory-crystal');
-            this.orbs = document.querySelectorAll('.nav-orb');
+            this.cards = document.querySelectorAll('.photo-card');
+            this.dots = document.querySelectorAll('.dot');
             this.currentIndex = 0;
             this.isAnimating = false;
             this.touchStartX = 0;
-            this.touchStartY = 0;
+            this.touchEndX = 0;
             this.init();
         }
 
         init() {
-            this.setupTouchControls();
-            this.setupOrbNavigation();
-            this.setupAutoRotation();
+            this.setupTouchEvents();
+            this.setupDotNavigation();
+            this.setupCardClicks();
+            this.addHardwareAcceleration();
         }
 
-        setupTouchControls() {
-            let currentCrystal = null;
-            
-            this.crystals.forEach((crystal, index) => {
-                crystal.addEventListener('touchstart', (e) => {
-                    if (this.isAnimating) return;
-                    this.touchStartX = e.touches[0].clientX;
-                    this.touchStartY = e.touches[0].clientY;
-                    currentCrystal = crystal;
-                    crystal.style.transition = 'none';
-                });
-
-                crystal.addEventListener('touchmove', (e) => {
-                    if (!currentCrystal || currentCrystal !== crystal) return;
-                    
-                    const deltaX = e.touches[0].clientX - this.touchStartX;
-                    const deltaY = e.touches[0].clientY - this.touchStartY;
-                    
-                    // 3D rotation based on swipe
-                    const rotateY = deltaX * 0.5;
-                    const rotateX = -deltaY * 0.3;
-                    
-                    crystal.style.transform = `translate(-50%, -50%) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
-                });
-
-                crystal.addEventListener('touchend', (e) => {
-                    if (!currentCrystal || currentCrystal !== crystal) return;
-                    
-                    crystal.style.transition = '';
-                    const deltaX = e.changedTouches[0].clientX - this.touchStartX;
-                    
-                    if (Math.abs(deltaX) > 80) {
-                        if (deltaX > 0) {
-                            this.navigate('next');
-                        } else {
-                            this.navigate('prev');
-                        }
-                    } else {
-                        // Tap to focus
-                        const crystalIndex = parseInt(crystal.dataset.index);
-                        if (crystalIndex !== this.currentIndex) {
-                            this.focusCrystal(crystalIndex);
-                        }
-                    }
-                    
-                    currentCrystal = null;
-                });
+        addHardwareAcceleration() {
+            this.cards.forEach(card => {
+                card.classList.add('hardware-accelerated');
             });
         }
 
-        setupOrbNavigation() {
-            this.orbs.forEach((orb, index) => {
-                orb.addEventListener('click', () => {
-                    if (!this.isAnimating) {
-                        this.focusCrystal(index);
-                    }
-                });
-            });
-        }
+        setupTouchEvents() {
+            const container = document.getElementById('photoContainer');
+            
+            container.addEventListener('touchstart', (e) => {
+                if (this.isAnimating) return;
+                this.touchStartX = e.touches[0].clientX;
+            }, { passive: true });
 
-        setupAutoRotation() {
-            // Gentle auto-rotation when idle
-            let idleTimer;
-            const startIdle = () => {
-                idleTimer = setTimeout(() => {
-                    this.navigate('next');
-                    startIdle();
-                }, 5000);
-            };
-            
-            const resetIdle = () => {
-                clearTimeout(idleTimer);
-                startIdle();
-            };
-            
-            document.addEventListener('touchstart', resetIdle);
-            startIdle();
-        }
-
-        navigate(direction) {
-            if (this.isAnimating) return;
-            
-            if (direction === 'next') {
-                this.currentIndex = (this.currentIndex + 1) % this.crystals.length;
-            } else {
-                this.currentIndex = (this.currentIndex - 1 + this.crystals.length) % this.crystals.length;
-            }
-            
-            this.updateConstellation();
-        }
-
-        focusCrystal(index) {
-            this.currentIndex = index;
-            this.updateConstellation();
-        }
-
-        updateConstellation() {
-            this.isAnimating = true;
-            
-            this.crystals.forEach((crystal, index) => {
-                const offset = (index - this.currentIndex + this.crystals.length) % this.crystals.length;
+            container.addEventListener('touchmove', (e) => {
+                if (this.isAnimating) return;
+                const currentX = e.touches[0].clientX;
+                const diff = currentX - this.touchStartX;
                 
-                if (offset === 0) {
-                    crystal.classList.add('active');
-                    crystal.style.zIndex = 50;
-                    crystal.style.transform = 'translate(-50%, -50%) rotateY(0deg) rotateZ(0deg) scale(1.1)';
-                } else {
-                    crystal.classList.remove('active');
-                    const angle = (offset - 3) * 15;
-                    const z = this.crystals.length - offset;
-                    crystal.style.zIndex = z;
-                    
-                    const rotateZ = (offset % 2 === 0 ? 1 : -1) * (3 + offset * 1.5);
-                    const translateOffset = offset * 3;
-                    crystal.style.transform = `translate(${-50 + translateOffset}%, ${-50 + translateOffset}%) rotateY(${angle}deg) rotateZ(${rotateZ}deg) scale(${1 - offset * 0.08})`;
+                // Add swipe preview effect
+                const activeCard = this.cards[this.currentIndex];
+                if (activeCard && Math.abs(diff) > 10) {
+                    activeCard.style.transform = `translateX(${diff * 0.3}px) scale(0.95)`;
                 }
+            }, { passive: true });
+
+            container.addEventListener('touchend', (e) => {
+                if (this.isAnimating) return;
+                this.touchEndX = e.changedTouches[0].clientX;
+                this.handleSwipe();
+                
+                // Reset preview
+                const activeCard = this.cards[this.currentIndex];
+                if (activeCard) {
+                    activeCard.style.transform = '';
+                }
+            }, { passive: true });
+        }
+
+        handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = this.touchStartX - this.touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    this.nextPhoto();
+                } else {
+                    this.previousPhoto();
+                }
+            }
+        }
+
+        setupDotNavigation() {
+            this.dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    if (!this.isAnimating && index !== this.currentIndex) {
+                        this.goToPhoto(index);
+                    }
+                });
             });
+        }
+
+        setupCardClicks() {
+            this.cards.forEach((card, index) => {
+                card.addEventListener('click', (e) => {
+                    if (this.isAnimating) return;
+                    
+                    const cardIndex = parseInt(card.dataset.index);
+                    if (cardIndex === this.currentIndex) return;
+                    
+                    if (card.classList.contains('prev')) {
+                        this.previousPhoto();
+                    } else if (card.classList.contains('next')) {
+                        this.nextPhoto();
+                    }
+                });
+            });
+        }
+
+        nextPhoto() {
+            if (this.isAnimating) return;
+            const nextIndex = (this.currentIndex + 1) % this.cards.length;
+            this.goToPhoto(nextIndex);
+        }
+
+        previousPhoto() {
+            if (this.isAnimating) return;
+            const prevIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
+            this.goToPhoto(prevIndex);
+        }
+
+        goToPhoto(index) {
+            if (this.isAnimating || index === this.currentIndex) return;
             
-            this.updateOrbs();
+            this.isAnimating = true;
+            this.currentIndex = index;
+            
+            this.updateCardPositions();
+            this.updateDots();
             
             setTimeout(() => {
                 this.isAnimating = false;
-            }, 600);
+            }, 500);
         }
 
-        updateOrbs() {
-            this.orbs.forEach((orb, index) => {
-                orb.classList.toggle('active', index === this.currentIndex);
+        updateCardPositions() {
+            this.cards.forEach((card, index) => {
+                const position = (index - this.currentIndex + this.cards.length) % this.cards.length;
+                
+                card.classList.remove('active', 'prev', 'next', 'hidden');
+                
+                if (position === 0) {
+                    card.classList.add('active');
+                } else if (position === 1) {
+                    card.classList.add('next');
+                } else if (position === this.cards.length - 1) {
+                    card.classList.add('prev');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        updateDots() {
+            this.dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === this.currentIndex);
             });
         }
     }
 
-    // Touch aurora effect
-    function createTouchAurora(e) {
-        const aurora = document.createElement('div');
-        aurora.className = 'touch-aurora';
-        aurora.style.left = e.touches[0].clientX + 'px';
-        aurora.style.top = e.touches[0].clientY + 'px';
-        document.body.appendChild(aurora);
+    // Ripple effect
+    function createRipple(e) {
+        const ripple = document.createElement('div');
+        ripple.className = 'ripple';
         
-        setTimeout(() => aurora.remove(), 800);
+        const rect = e.currentTarget.getBoundingClientRect();
+        const size = 20;
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        
+        e.currentTarget.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
     }
 
-    // Initialize everything
+    // Toast notification
+    function showToast(message) {
+        // Simple feedback for demo
+        const existingToast = document.querySelector('.toast');
+        if (existingToast) existingToast.remove();
+        
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: calc(var(--nav-height) + 80px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            animation: toast-in 0.3s ease;
+        `;
+        
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
+    }
+
+    // Initialize app
     document.addEventListener('DOMContentLoaded', () => {
-        // Start magical systems
-        new MagicalParticleSystem();
-        new PhotoConstellation();
+        // Start systems
+        new ParticleSystem();
+        const carousel = new PhotoCarousel();
         
-        // Touch feedback
-        document.addEventListener('touchstart', createTouchAurora);
+        // Add ripple to nav items
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', createRipple);
+        });
         
-        // Prevent overscroll
+        // Prevent pull-to-refresh
         document.body.addEventListener('touchmove', (e) => {
-            if (e.touches[0].clientY > 10) {
+            if (e.touches[0].clientY > 0) {
                 e.preventDefault();
             }
         }, { passive: false });
         
-        // Add subtle parallax to decorative elements
-        let ticking = false;
-        function updateParallax() {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const scrolled = window.pageYOffset;
-                    const rate = scrolled * 0.5;
-                    
-                    document.querySelectorAll('.aurora-layer').forEach((layer, i) => {
-                        layer.style.transform = `translateY(${rate * (i + 1) * 0.1}px)`;
-                    });
-                    
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }
-        
-        window.addEventListener('scroll', updateParallax);
+        // Handle orientation changes
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                carousel.updateCardPositions();
+            }, 300);
+        });
     });
+
+    // Performance monitoring
+    if ('performance' in window) {
+        window.addEventListener('load', () => {
+            const perfData = window.performance.timing;
+            const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+            console.log(`Page load time: ${pageLoadTime}ms`);
+        });
+    }
 </script>
 ```
 
