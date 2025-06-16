@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Princess Amaya's Memory Book</title>
+    <title>Our Little Princess Amaya</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&family=Playfair+Display:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Poppins:wght@200;300;400&display=swap');
 
 ```
     * {
@@ -19,322 +19,389 @@
     }
 
     :root {
-        --soft-pink: #FFE4E9;
-        --lavender: #F3E5F5;
-        --sky-blue: #E3F2FD;
-        --cream: #FFF8E7;
+        --blush: #FFE0E6;
+        --lavender: #EDE4FF;
+        --sky: #E3F2FD;
+        --cream: #FFF9E6;
         --rose: #FFCDD2;
-        --purple: #E1BEE7;
+        --periwinkle: #C5CAE9;
         --mint: #E0F2F1;
         --gold: #FFE082;
-        --white: #FFFFFF;
-        --shadow: rgba(0, 0, 0, 0.08);
-        --text: #6B5B73;
-        --header-height: 120px;
-        --nav-height: 60px;
-        --safe-area-bottom: env(safe-area-inset-bottom, 20px);
+        --pearl: #FAFAFA;
+        --gradient-aurora: linear-gradient(135deg, #FFE0E6 0%, #EDE4FF 33%, #E3F2FD 66%, #FFE0E6 100%);
+        --gradient-dream: linear-gradient(135deg, #FFCDD2 0%, #C5CAE9 50%, #E0F2F1 100%);
+        --gradient-shimmer: linear-gradient(135deg, #FFE082 0%, #FFE0E6 50%, #EDE4FF 100%);
     }
 
     html, body {
         height: 100%;
         overflow: hidden;
-        font-family: 'Montserrat', sans-serif;
-        background: var(--cream);
-        color: var(--text);
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--pearl);
+        position: relative;
+        touch-action: none;
     }
 
     /* App container */
     .app-container {
-        position: relative;
-        width: 100%;
-        height: 100%;
+        height: 100vh;
+        height: 100dvh;
         display: flex;
         flex-direction: column;
-        background: linear-gradient(180deg, var(--lavender) 0%, var(--cream) 30%, var(--soft-pink) 100%);
-    }
-
-    /* Subtle animated background */
-    .ambient-layer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.4;
-        pointer-events: none;
+        position: relative;
         overflow: hidden;
     }
 
-    .gradient-orb {
+    /* Dreamy background layers */
+    .dream-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+
+    .aurora-wave {
         position: absolute;
-        border-radius: 50%;
-        filter: blur(40px);
-        animation: float-gentle 20s infinite ease-in-out;
+        width: 200%;
+        height: 200%;
+        top: -50%;
+        left: -50%;
+        opacity: 0.4;
+        filter: blur(80px);
+        animation: aurora-flow 25s ease-in-out infinite;
     }
 
-    .gradient-orb:nth-child(1) {
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, var(--rose), transparent);
-        top: -150px;
-        left: -150px;
+    .aurora-1 {
+        background: radial-gradient(ellipse at 30% 40%, var(--blush) 0%, transparent 60%);
     }
 
-    .gradient-orb:nth-child(2) {
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, var(--purple), transparent);
-        bottom: -200px;
-        right: -200px;
-        animation-delay: -10s;
+    .aurora-2 {
+        background: radial-gradient(ellipse at 70% 60%, var(--lavender) 0%, transparent 60%);
+        animation-delay: -8s;
+        animation-duration: 30s;
     }
 
-    .gradient-orb:nth-child(3) {
-        width: 250px;
-        height: 250px;
-        background: radial-gradient(circle, var(--sky-blue), transparent);
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        animation-delay: -5s;
+    .aurora-3 {
+        background: radial-gradient(ellipse at 50% 30%, var(--sky) 0%, transparent 70%);
+        animation-delay: -16s;
+        animation-duration: 35s;
     }
 
-    @keyframes float-gentle {
-        0%, 100% { transform: translate(0, 0) scale(1); }
-        33% { transform: translate(30px, -30px) scale(1.1); }
-        66% { transform: translate(-20px, 20px) scale(0.9); }
+    @keyframes aurora-flow {
+        0%, 100% { transform: rotate(0deg) scale(1) translate(0, 0); }
+        25% { transform: rotate(90deg) scale(1.1) translate(5%, -5%); }
+        50% { transform: rotate(180deg) scale(0.95) translate(-5%, 5%); }
+        75% { transform: rotate(270deg) scale(1.05) translate(3%, -3%); }
     }
 
-    /* Particle system */
-    .particle-system {
-        position: absolute;
+    /* Magical overlay */
+    .magic-overlay {
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
         pointer-events: none;
-        z-index: 2;
+        z-index: 1;
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+        animation: overlay-shift 20s ease-in-out infinite;
     }
 
-    .particle {
-        position: absolute;
+    @keyframes overlay-shift {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 0.8; }
+    }
+
+    /* Particle field */
+    .particle-field {
+        position: fixed;
+        width: 100%;
+        height: 100%;
         pointer-events: none;
+        z-index: 90;
     }
 
     .sparkle {
-        width: 4px;
-        height: 4px;
+        position: absolute;
+        width: 3px;
+        height: 3px;
         background: white;
         border-radius: 50%;
-        box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
-        animation: sparkle-fall 15s linear infinite;
+        box-shadow: 
+            0 0 6px rgba(255, 255, 255, 0.9),
+            0 0 12px rgba(255, 224, 230, 0.6),
+            0 0 20px rgba(237, 228, 255, 0.4);
+        animation: sparkle-dance 15s linear infinite;
     }
 
-    .floating-star {
+    .fairy-light {
+        position: absolute;
         width: 20px;
         height: 20px;
-        opacity: 0.6;
-        animation: star-float 20s ease-in-out infinite;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 224, 230, 0.4) 40%, transparent 70%);
+        border-radius: 50%;
+        filter: blur(1px);
+        animation: fairy-flight 20s ease-in-out infinite;
     }
 
-    .floating-star::before {
-        content: '✦';
-        font-size: 20px;
-        color: var(--gold);
-        filter: drop-shadow(0 0 3px rgba(255, 224, 130, 0.6));
+    .crystal-dust {
+        position: absolute;
+        width: 8px;
+        height: 16px;
+        background: linear-gradient(45deg, rgba(255, 255, 255, 0.8), rgba(227, 242, 253, 0.6));
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        animation: crystal-fall 12s linear infinite;
     }
 
-    @keyframes sparkle-fall {
+    @keyframes sparkle-dance {
         0% {
-            transform: translateY(-10px) translateX(0) scale(0);
+            transform: translateY(100vh) translateX(0) scale(0);
             opacity: 0;
         }
-        10% {
-            opacity: 1;
-        }
-        90% {
-            opacity: 1;
-        }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
         100% {
-            transform: translateY(calc(100vh + 10px)) translateX(50px) scale(1.5);
+            transform: translateY(-20px) translateX(80px) scale(1.5);
             opacity: 0;
         }
     }
 
-    @keyframes star-float {
+    @keyframes fairy-flight {
         0%, 100% {
-            transform: translate(0, 0) rotate(0deg);
+            transform: translate(0, 0) scale(0.8);
+            opacity: 0.5;
         }
         25% {
-            transform: translate(20px, -20px) rotate(90deg);
+            transform: translate(60px, -80px) scale(1.2);
+            opacity: 0.8;
         }
         50% {
-            transform: translate(-10px, -40px) rotate(180deg);
+            transform: translate(-40px, -160px) scale(1);
+            opacity: 0.7;
         }
         75% {
-            transform: translate(30px, -20px) rotate(270deg);
+            transform: translate(40px, -80px) scale(1.1);
+            opacity: 0.9;
+        }
+    }
+
+    @keyframes crystal-fall {
+        0% {
+            transform: translateY(-20px) rotate(0deg);
+            opacity: 0;
+        }
+        10% { opacity: 0.8; }
+        90% { opacity: 0.8; }
+        100% {
+            transform: translateY(100vh) rotate(720deg);
+            opacity: 0;
         }
     }
 
     /* Compact header */
-    .header {
+    .enchanted-header {
+        padding: env(safe-area-inset-top) 20px 20px;
+        text-align: center;
         position: relative;
-        height: var(--header-height);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.8);
         z-index: 10;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.4) 100%);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     }
 
-    .crown-icon {
-        font-size: 2rem;
-        margin-bottom: 8px;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-        animation: crown-pulse 3s ease-in-out infinite;
+    .crown-container {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 15px;
     }
 
-    @keyframes crown-pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-    }
-
-    .app-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.5rem;
-        font-weight: 400;
-        background: linear-gradient(135deg, var(--text), var(--purple));
+    .crown {
+        font-size: 2.5rem;
+        background: linear-gradient(135deg, #FFD700, #FFAB00, #FFD700);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        letter-spacing: 1px;
+        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+        animation: crown-glow 3s ease-in-out infinite;
     }
 
-    /* Content area */
-    .content-area {
+    @keyframes crown-glow {
+        0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5)); }
+        50% { transform: scale(1.1); filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8)); }
+    }
+
+    .magic-circles {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80px;
+        height: 80px;
+        pointer-events: none;
+    }
+
+    .circle-ring {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        border-radius: 50%;
+        animation: ring-pulse 3s ease-in-out infinite;
+    }
+
+    .circle-ring:nth-child(2) {
+        animation-delay: -1s;
+    }
+
+    .circle-ring:nth-child(3) {
+        animation-delay: -2s;
+    }
+
+    @keyframes ring-pulse {
+        0%, 100% {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.5);
+            opacity: 0.5;
+        }
+    }
+
+    .princess-name {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2.2rem;
+        font-weight: 300;
+        background: var(--gradient-dream);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: 2px;
+        line-height: 1.2;
+        margin: 0 20px;
+    }
+
+    /* Main content area */
+    .memory-sanctuary {
         flex: 1;
         position: relative;
         overflow: hidden;
-    }
-
-    /* Photo carousel */
-    .photo-carousel {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column;
         padding: 20px;
     }
 
-    .photo-container {
+    /* Photo carousel */
+    .photo-realm {
+        flex: 1;
         position: relative;
-        width: 100%;
-        max-width: 350px;
-        height: 450px;
-        perspective: 1000px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 1200px;
+        touch-action: pan-y pinch-zoom;
     }
 
-    .photo-card {
+    .memory-card {
         position: absolute;
-        width: 100%;
-        height: 100%;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 85%;
+        max-width: 320px;
+        transform-style: preserve-3d;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
     }
 
     .card-inner {
         position: relative;
-        width: 100%;
-        height: 100%;
         background: white;
         border-radius: 20px;
-        padding: 15px;
+        padding: 12px 12px 60px;
         box-shadow: 
-            0 10px 30px rgba(0, 0, 0, 0.1),
-            0 1px 0 rgba(255, 255, 255, 0.9) inset;
-        transform-style: preserve-3d;
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            0 20px 60px rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+        overflow: visible;
     }
 
-    .photo-card.active {
-        z-index: 10;
-        transform: translateZ(0) rotateY(0deg);
-    }
-
-    .photo-card.prev {
-        transform: translateX(-80%) scale(0.85) rotateY(25deg);
-        opacity: 0.7;
-        z-index: 5;
-    }
-
-    .photo-card.next {
-        transform: translateX(80%) scale(0.85) rotateY(-25deg);
-        opacity: 0.7;
-        z-index: 5;
-    }
-
-    .photo-card.hidden {
-        transform: translateX(0) scale(0.7) translateZ(-200px);
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    /* Photo decoration */
-    .photo-decoration {
+    .card-glow {
         position: absolute;
-        top: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80px;
-        height: 30px;
-        background: linear-gradient(135deg, var(--rose) 0%, var(--purple) 100%);
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        background: var(--gradient-aurora);
+        border-radius: 24px;
         opacity: 0.6;
-        border-radius: 3px;
+        filter: blur(8px);
+        z-index: -1;
+        animation: glow-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+        0%, 100% { opacity: 0.6; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.02); }
+    }
+
+    /* Card decorations */
+    .ribbon-accent {
+        position: absolute;
+        width: 90px;
+        height: 25px;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-1deg);
+        background: linear-gradient(90deg, transparent 5%, var(--rose) 20%, var(--blush) 50%, var(--rose) 80%, transparent 95%);
+        opacity: 0.8;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .photo-gem {
+    .gem-accent {
         position: absolute;
-        bottom: 10px;
-        right: 10px;
-        width: 30px;
-        height: 30px;
-        background: radial-gradient(circle at 30% 30%, var(--sky-blue), var(--purple));
+        width: 35px;
+        height: 35px;
+        bottom: 12px;
+        right: 12px;
+        background: radial-gradient(circle at 30% 30%, var(--sky), var(--periwinkle));
         border-radius: 50%;
         box-shadow: 
-            0 3px 10px rgba(0, 0, 0, 0.2),
+            0 3px 12px rgba(0, 0, 0, 0.2),
+            inset -2px -2px 4px rgba(0, 0, 0, 0.15),
             inset 2px 2px 4px rgba(255, 255, 255, 0.6);
-        animation: gem-shimmer 3s ease-in-out infinite;
+        animation: gem-twinkle 3s ease-in-out infinite;
     }
 
-    @keyframes gem-shimmer {
+    @keyframes gem-twinkle {
         0%, 100% { transform: scale(1) rotate(0deg); }
         50% { transform: scale(1.1) rotate(5deg); }
     }
 
-    .photo-content {
-        width: 100%;
-        height: 100%;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--lavender), var(--soft-pink));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
+    .corner-decoration {
+        position: absolute;
+        font-size: 1.5rem;
+        top: -15px;
+        right: -15px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        animation: decoration-float 4s ease-in-out infinite;
     }
 
-    .photo-icon {
-        font-size: 5rem;
-        opacity: 0.2;
-        user-select: none;
+    @keyframes decoration-float {
+        0%, 100% { transform: translateY(0) rotate(-10deg); }
+        50% { transform: translateY(-3px) rotate(10deg); }
+    }
+
+    /* Photo area */
+    .photo-window {
+        width: 100%;
+        height: 320px;
+        border-radius: 12px;
+        background: var(--gradient-shimmer);
+        position: relative;
+        overflow: hidden;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
     }
 
     .photo-shimmer {
@@ -343,538 +410,497 @@
         left: -50%;
         width: 200%;
         height: 200%;
-        background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%);
-        animation: shimmer 3s infinite;
+        background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+        animation: shimmer-sweep 3s infinite;
     }
 
-    @keyframes shimmer {
+    @keyframes shimmer-sweep {
         0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
         100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
 
-    /* Navigation dots */
-    .nav-dots {
-        position: absolute;
-        bottom: calc(var(--nav-height) + 30px);
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 12px;
-        padding: 10px 20px;
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: var(--purple);
-        opacity: 0.3;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-    .dot.active {
-        opacity: 1;
-        transform: scale(1.3);
-        background: linear-gradient(135deg, var(--purple), var(--rose));
-    }
-
-    /* Bottom navigation */
-    .bottom-nav {
-        position: relative;
-        height: var(--nav-height);
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(20px);
-        border-top: 1px solid rgba(255, 255, 255, 0.8);
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        padding-bottom: var(--safe-area-bottom);
-        z-index: 10;
-    }
-
-    .nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-        padding: 8px 16px;
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        color: var(--text);
-        text-decoration: none;
-    }
-
-    .nav-item:active {
-        transform: scale(0.95);
-        background: rgba(0, 0, 0, 0.05);
-    }
-
-    .nav-icon {
-        font-size: 1.5rem;
-    }
-
-    .nav-label {
-        font-size: 0.75rem;
-        font-weight: 300;
-        letter-spacing: 0.5px;
-    }
-
-    /* Touch feedback */
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
-        transform: scale(0);
-        animation: ripple-expand 0.6s ease-out;
-        pointer-events: none;
-    }
-
-    @keyframes ripple-expand {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-
-    /* Loading animation */
-    .loading {
+    .photo-placeholder {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        display: none;
+        font-size: 5rem;
+        opacity: 0.1;
+        animation: placeholder-breathe 4s ease-in-out infinite;
     }
 
-    .loading-spinner {
-        width: 40px;
-        height: 40px;
-        border: 3px solid var(--lavender);
-        border-top-color: var(--purple);
+    @keyframes placeholder-breathe {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; }
+        50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.15; }
+    }
+
+    /* Navigation dots */
+    .crystal-nav {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        padding: 20px;
+        position: relative;
+        z-index: 10;
+    }
+
+    .nav-crystal {
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
-        animation: spin 1s linear infinite;
+        background: linear-gradient(135deg, var(--lavender), var(--blush));
+        opacity: 0.4;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
-    @keyframes spin {
-        to { transform: rotate(360deg); }
+    .nav-crystal::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--blush), transparent);
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 0.3s ease;
     }
 
-    /* Performance optimizations */
-    .hardware-accelerated {
-        transform: translateZ(0);
-        will-change: transform;
+    .nav-crystal.active {
+        opacity: 1;
+        transform: scale(1.2);
+        background: linear-gradient(135deg, var(--rose), var(--periwinkle));
+        box-shadow: 
+            0 0 12px rgba(255, 205, 210, 0.6),
+            0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
-    /* Responsive adjustments */
-    @media (max-height: 700px) {
-        .photo-container {
-            height: 380px;
+    .nav-crystal.active::before {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    /* Footer */
+    .enchanted-footer {
+        padding: 20px 20px env(safe-area-inset-bottom);
+        text-align: center;
+        font-size: 0.9rem;
+        color: var(--periwinkle);
+        letter-spacing: 2px;
+        font-weight: 200;
+        position: relative;
+        z-index: 10;
+    }
+
+    .footer-sparkles {
+        display: inline-block;
+        margin: 0 10px;
+        font-size: 1.2rem;
+        animation: sparkle-rotate 3s linear infinite;
+    }
+
+    @keyframes sparkle-rotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Touch feedback */
+    .touch-ripple {
+        position: fixed;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 224, 230, 0.6), rgba(237, 228, 255, 0.4), transparent);
+        pointer-events: none;
+        transform: translate(-50%, -50%) scale(0);
+        animation: ripple-expand 0.6s ease-out;
+        z-index: 200;
+    }
+
+    @keyframes ripple-expand {
+        to {
+            transform: translate(-50%, -50%) scale(3);
+            opacity: 0;
         }
-        .nav-dots {
-            bottom: calc(var(--nav-height) + 20px);
-        }
     }
 
-    @media (max-width: 380px) {
-        .photo-container {
-            max-width: 300px;
-        }
+    /* Photo stack positioning */
+    .memory-card:nth-child(1) { z-index: 6; }
+    .memory-card:nth-child(2) { z-index: 5; transform: translateX(10px) translateY(10px) rotate(2deg) scale(0.98); }
+    .memory-card:nth-child(3) { z-index: 4; transform: translateX(-10px) translateY(20px) rotate(-2deg) scale(0.96); }
+    .memory-card:nth-child(4) { z-index: 3; transform: translateX(15px) translateY(30px) rotate(3deg) scale(0.94); }
+    .memory-card:nth-child(5) { z-index: 2; transform: translateX(-15px) translateY(40px) rotate(-3deg) scale(0.92); }
+    .memory-card:nth-child(6) { z-index: 1; transform: translateX(5px) translateY(50px) rotate(1deg) scale(0.9); }
+
+    .memory-card.active {
+        z-index: 10;
+        transform: translateX(0) translateY(0) rotate(0deg) scale(1.05);
     }
+
+    /* Unique decorations per card */
+    .memory-card:nth-child(1) .ribbon-accent { background: linear-gradient(90deg, transparent 5%, var(--blush) 20%, var(--rose) 50%, var(--blush) 80%, transparent 95%); }
+    .memory-card:nth-child(2) .ribbon-accent { background: linear-gradient(90deg, transparent 5%, var(--lavender) 20%, var(--periwinkle) 50%, var(--lavender) 80%, transparent 95%); }
+    .memory-card:nth-child(3) .ribbon-accent { background: linear-gradient(90deg, transparent 5%, var(--sky) 20%, var(--mint) 50%, var(--sky) 80%, transparent 95%); }
+    .memory-card:nth-child(4) .ribbon-accent { background: linear-gradient(90deg, transparent 5%, var(--gold) 20%, var(--cream) 50%, var(--gold) 80%, transparent 95%); }
+    .memory-card:nth-child(5) .ribbon-accent { background: linear-gradient(90deg, transparent 5%, var(--mint) 20%, var(--sky) 50%, var(--mint) 80%, transparent 95%); }
+    .memory-card:nth-child(6) .ribbon-accent { background: linear-gradient(90deg, transparent 5%, var(--cream) 20%, var(--gold) 50%, var(--cream) 80%, transparent 95%); }
+
+    .memory-card:nth-child(1) .gem-accent { background: radial-gradient(circle at 30% 30%, var(--rose), var(--blush)); }
+    .memory-card:nth-child(2) .gem-accent { background: radial-gradient(circle at 30% 30%, var(--periwinkle), var(--lavender)); }
+    .memory-card:nth-child(3) .gem-accent { background: radial-gradient(circle at 30% 30%, var(--mint), var(--sky)); }
+    .memory-card:nth-child(4) .gem-accent { background: radial-gradient(circle at 30% 30%, var(--cream), var(--gold)); }
+    .memory-card:nth-child(5) .gem-accent { background: radial-gradient(circle at 30% 30%, var(--sky), var(--mint)); }
+    .memory-card:nth-child(6) .gem-accent { background: radial-gradient(circle at 30% 30%, var(--gold), var(--cream)); }
 </style>
 ```
 
 </head>
 <body>
     <div class="app-container">
-        <!-- Ambient background -->
-        <div class="ambient-layer">
-            <div class="gradient-orb"></div>
-            <div class="gradient-orb"></div>
-            <div class="gradient-orb"></div>
+        <!-- Background layers -->
+        <div class="dream-canvas">
+            <div class="aurora-wave aurora-1"></div>
+            <div class="aurora-wave aurora-2"></div>
+            <div class="aurora-wave aurora-3"></div>
         </div>
+        <div class="magic-overlay"></div>
 
 ```
-    <!-- Particle system -->
-    <div class="particle-system" id="particleSystem"></div>
+    <!-- Particle field -->
+    <div class="particle-field" id="particleField"></div>
 
     <!-- Header -->
-    <header class="header">
-        <div class="crown-icon">👑</div>
-        <h1 class="app-title">Princess Amaya's Memories</h1>
+    <header class="enchanted-header">
+        <div class="crown-container">
+            <div class="magic-circles">
+                <div class="circle-ring"></div>
+                <div class="circle-ring"></div>
+                <div class="circle-ring"></div>
+            </div>
+            <div class="crown">👑</div>
+        </div>
+        <h1 class="princess-name">Our Little Princess Amaya</h1>
     </header>
 
-    <!-- Content area -->
-    <main class="content-area">
-        <!-- Photo carousel -->
-        <div class="photo-carousel">
-            <div class="photo-container" id="photoContainer">
-                <!-- Photos will be dynamically positioned -->
-                <div class="photo-card active" data-index="0">
-                    <div class="card-inner">
-                        <div class="photo-decoration"></div>
-                        <div class="photo-gem"></div>
-                        <div class="photo-content">
-                            <div class="photo-shimmer"></div>
-                            <span class="photo-icon">🌸</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="photo-card next" data-index="1">
-                    <div class="card-inner">
-                        <div class="photo-decoration" style="background: linear-gradient(135deg, var(--sky-blue) 0%, var(--mint) 100%);"></div>
-                        <div class="photo-gem" style="background: radial-gradient(circle at 30% 30%, var(--gold), var(--rose));"></div>
-                        <div class="photo-content">
-                            <div class="photo-shimmer"></div>
-                            <span class="photo-icon">👶</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="photo-card hidden" data-index="2">
-                    <div class="card-inner">
-                        <div class="photo-decoration" style="background: linear-gradient(135deg, var(--purple) 0%, var(--sky-blue) 100%);"></div>
-                        <div class="photo-gem" style="background: radial-gradient(circle at 30% 30%, var(--mint), var(--lavender));"></div>
-                        <div class="photo-content">
-                            <div class="photo-shimmer"></div>
-                            <span class="photo-icon">🌙</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="photo-card hidden" data-index="3">
-                    <div class="card-inner">
-                        <div class="photo-decoration" style="background: linear-gradient(135deg, var(--gold) 0%, var(--rose) 100%);"></div>
-                        <div class="photo-gem"></div>
-                        <div class="photo-content">
-                            <div class="photo-shimmer"></div>
-                            <span class="photo-icon">🎀</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="photo-card hidden" data-index="4">
-                    <div class="card-inner">
-                        <div class="photo-decoration"></div>
-                        <div class="photo-gem" style="background: radial-gradient(circle at 30% 30%, var(--purple), var(--rose));"></div>
-                        <div class="photo-content">
-                            <div class="photo-shimmer"></div>
-                            <span class="photo-icon">🌈</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="photo-card hidden" data-index="5">
-                    <div class="card-inner">
-                        <div class="photo-decoration" style="background: linear-gradient(135deg, var(--mint) 0%, var(--gold) 100%);"></div>
-                        <div class="photo-gem" style="background: radial-gradient(circle at 30% 30%, var(--lavender), var(--sky-blue));"></div>
-                        <div class="photo-content">
-                            <div class="photo-shimmer"></div>
-                            <span class="photo-icon">💕</span>
-                        </div>
+    <!-- Main content -->
+    <main class="memory-sanctuary">
+        <div class="photo-realm" id="photoRealm">
+            <!-- Memory Card 1 -->
+            <div class="memory-card active" data-index="0">
+                <div class="card-inner">
+                    <div class="card-glow"></div>
+                    <div class="ribbon-accent"></div>
+                    <div class="gem-accent"></div>
+                    <div class="corner-decoration">✨</div>
+                    <div class="photo-window">
+                        <div class="photo-shimmer"></div>
+                        <div class="photo-placeholder">👶</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Navigation dots -->
-            <div class="nav-dots" id="navDots">
-                <span class="dot active" data-index="0"></span>
-                <span class="dot" data-index="1"></span>
-                <span class="dot" data-index="2"></span>
-                <span class="dot" data-index="3"></span>
-                <span class="dot" data-index="4"></span>
-                <span class="dot" data-index="5"></span>
+            <!-- Memory Card 2 -->
+            <div class="memory-card" data-index="1">
+                <div class="card-inner">
+                    <div class="card-glow"></div>
+                    <div class="ribbon-accent"></div>
+                    <div class="gem-accent"></div>
+                    <div class="corner-decoration">🌸</div>
+                    <div class="photo-window">
+                        <div class="photo-shimmer"></div>
+                        <div class="photo-placeholder">🍼</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Card 3 -->
+            <div class="memory-card" data-index="2">
+                <div class="card-inner">
+                    <div class="card-glow"></div>
+                    <div class="ribbon-accent"></div>
+                    <div class="gem-accent"></div>
+                    <div class="corner-decoration">🦋</div>
+                    <div class="photo-window">
+                        <div class="photo-shimmer"></div>
+                        <div class="photo-placeholder">🌙</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Card 4 -->
+            <div class="memory-card" data-index="3">
+                <div class="card-inner">
+                    <div class="card-glow"></div>
+                    <div class="ribbon-accent"></div>
+                    <div class="gem-accent"></div>
+                    <div class="corner-decoration">⭐</div>
+                    <div class="photo-window">
+                        <div class="photo-shimmer"></div>
+                        <div class="photo-placeholder">🎀</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Card 5 -->
+            <div class="memory-card" data-index="4">
+                <div class="card-inner">
+                    <div class="card-glow"></div>
+                    <div class="ribbon-accent"></div>
+                    <div class="gem-accent"></div>
+                    <div class="corner-decoration">🌺</div>
+                    <div class="photo-window">
+                        <div class="photo-shimmer"></div>
+                        <div class="photo-placeholder">🌈</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Card 6 -->
+            <div class="memory-card" data-index="5">
+                <div class="card-inner">
+                    <div class="card-glow"></div>
+                    <div class="ribbon-accent"></div>
+                    <div class="gem-accent"></div>
+                    <div class="corner-decoration">💕</div>
+                    <div class="photo-window">
+                        <div class="photo-shimmer"></div>
+                        <div class="photo-placeholder">👨‍👩‍👧</div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Loading spinner -->
-        <div class="loading" id="loading">
-            <div class="loading-spinner"></div>
-        </div>
+        <!-- Navigation -->
+        <nav class="crystal-nav" id="crystalNav">
+            <div class="nav-crystal active" data-index="0"></div>
+            <div class="nav-crystal" data-index="1"></div>
+            <div class="nav-crystal" data-index="2"></div>
+            <div class="nav-crystal" data-index="3"></div>
+            <div class="nav-crystal" data-index="4"></div>
+            <div class="nav-crystal" data-index="5"></div>
+        </nav>
     </main>
 
-    <!-- Bottom navigation -->
-    <nav class="bottom-nav">
-        <a href="#" class="nav-item" onclick="event.preventDefault(); showToast('Gallery')">
-            <span class="nav-icon">🖼️</span>
-            <span class="nav-label">Gallery</span>
-        </a>
-        <a href="#" class="nav-item" onclick="event.preventDefault(); showToast('Favorites')">
-            <span class="nav-icon">⭐</span>
-            <span class="nav-label">Favorites</span>
-        </a>
-        <a href="#" class="nav-item" onclick="event.preventDefault(); showToast('Share')">
-            <span class="nav-icon">💝</span>
-            <span class="nav-label">Share</span>
-        </a>
-    </nav>
+    <!-- Footer -->
+    <footer class="enchanted-footer">
+        <span class="footer-sparkles">✦</span>
+        Forever Our Princess
+        <span class="footer-sparkles">✦</span>
+    </footer>
 </div>
 
 <script>
-    // Particle System
-    class ParticleSystem {
+    // Professional mobile app controller
+    class EnchantedScrapbook {
         constructor() {
-            this.container = document.getElementById('particleSystem');
-            this.init();
-        }
-
-        init() {
-            // Create initial particles
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => this.createParticle(), i * 200);
-            }
-
-            // Continuously create particles
-            setInterval(() => {
-                if (Math.random() > 0.7) this.createParticle();
-            }, 2000);
-        }
-
-        createParticle() {
-            const types = ['sparkle', 'floating-star'];
-            const type = types[Math.floor(Math.random() * types.length)];
-            
-            const particle = document.createElement('div');
-            particle.className = `particle ${type}`;
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 2 + 's';
-            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-            
-            this.container.appendChild(particle);
-            
-            // Remove after animation
-            setTimeout(() => particle.remove(), 20000);
-        }
-    }
-
-    // Photo Carousel Controller
-    class PhotoCarousel {
-        constructor() {
-            this.cards = document.querySelectorAll('.photo-card');
-            this.dots = document.querySelectorAll('.dot');
+            this.cards = document.querySelectorAll('.memory-card');
+            this.navDots = document.querySelectorAll('.nav-crystal');
             this.currentIndex = 0;
-            this.isAnimating = false;
             this.touchStartX = 0;
-            this.touchEndX = 0;
+            this.touchStartY = 0;
+            this.isDragging = false;
+            this.threshold = 50;
+            
             this.init();
         }
 
         init() {
-            this.setupTouchEvents();
-            this.setupDotNavigation();
-            this.setupCardClicks();
-            this.addHardwareAcceleration();
+            this.setupTouch();
+            this.setupNavigation();
+            this.setupParticles();
+            this.preventOverscroll();
         }
 
-        addHardwareAcceleration() {
-            this.cards.forEach(card => {
-                card.classList.add('hardware-accelerated');
-            });
-        }
+        setupTouch() {
+            const realm = document.getElementById('photoRealm');
+            let currentCard = null;
+            let startTransform = '';
 
-        setupTouchEvents() {
-            const container = document.getElementById('photoContainer');
-            
-            container.addEventListener('touchstart', (e) => {
-                if (this.isAnimating) return;
+            realm.addEventListener('touchstart', (e) => {
+                if (e.touches.length !== 1) return;
+                
                 this.touchStartX = e.touches[0].clientX;
-            }, { passive: true });
-
-            container.addEventListener('touchmove', (e) => {
-                if (this.isAnimating) return;
-                const currentX = e.touches[0].clientX;
-                const diff = currentX - this.touchStartX;
+                this.touchStartY = e.touches[0].clientY;
+                this.isDragging = false;
                 
-                // Add swipe preview effect
-                const activeCard = this.cards[this.currentIndex];
-                if (activeCard && Math.abs(diff) > 10) {
-                    activeCard.style.transform = `translateX(${diff * 0.3}px) scale(0.95)`;
-                }
-            }, { passive: true });
+                currentCard = this.cards[this.currentIndex];
+                startTransform = currentCard.style.transform;
+                currentCard.style.transition = 'none';
+            });
 
-            container.addEventListener('touchend', (e) => {
-                if (this.isAnimating) return;
-                this.touchEndX = e.changedTouches[0].clientX;
-                this.handleSwipe();
+            realm.addEventListener('touchmove', (e) => {
+                if (!currentCard || e.touches.length !== 1) return;
                 
-                // Reset preview
-                const activeCard = this.cards[this.currentIndex];
-                if (activeCard) {
-                    activeCard.style.transform = '';
+                const deltaX = e.touches[0].clientX - this.touchStartX;
+                const deltaY = e.touches[0].clientY - this.touchStartY;
+                
+                if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+                    this.isDragging = true;
+                    e.preventDefault();
                 }
-            }, { passive: true });
-        }
+                
+                if (this.isDragging) {
+                    const rotation = deltaX * 0.1;
+                    const scale = 1.05 - Math.abs(deltaX) * 0.0002;
+                    currentCard.style.transform = `translateX(${deltaX * 0.3}px) rotate(${rotation}deg) scale(${scale})`;
+                }
+            });
 
-        handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = this.touchStartX - this.touchEndX;
-
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    this.nextPhoto();
+            realm.addEventListener('touchend', (e) => {
+                if (!currentCard) return;
+                
+                currentCard.style.transition = '';
+                const deltaX = e.changedTouches[0].clientX - this.touchStartX;
+                
+                if (this.isDragging && Math.abs(deltaX) > this.threshold) {
+                    if (deltaX > 0 && this.currentIndex > 0) {
+                        this.navigate(this.currentIndex - 1);
+                    } else if (deltaX < 0 && this.currentIndex < this.cards.length - 1) {
+                        this.navigate(this.currentIndex + 1);
+                    } else {
+                        this.updateStack();
+                    }
                 } else {
-                    this.previousPhoto();
+                    this.updateStack();
                 }
-            }
+                
+                currentCard = null;
+                this.isDragging = false;
+            });
+
+            // Touch feedback
+            document.addEventListener('touchstart', (e) => {
+                this.createRipple(e.touches[0].clientX, e.touches[0].clientY);
+            });
         }
 
-        setupDotNavigation() {
-            this.dots.forEach((dot, index) => {
+        setupNavigation() {
+            this.navDots.forEach((dot, index) => {
                 dot.addEventListener('click', () => {
-                    if (!this.isAnimating && index !== this.currentIndex) {
-                        this.goToPhoto(index);
-                    }
+                    this.navigate(index);
                 });
             });
         }
 
-        setupCardClicks() {
-            this.cards.forEach((card, index) => {
-                card.addEventListener('click', (e) => {
-                    if (this.isAnimating) return;
-                    
-                    const cardIndex = parseInt(card.dataset.index);
-                    if (cardIndex === this.currentIndex) return;
-                    
-                    if (card.classList.contains('prev')) {
-                        this.previousPhoto();
-                    } else if (card.classList.contains('next')) {
-                        this.nextPhoto();
-                    }
-                });
-            });
-        }
-
-        nextPhoto() {
-            if (this.isAnimating) return;
-            const nextIndex = (this.currentIndex + 1) % this.cards.length;
-            this.goToPhoto(nextIndex);
-        }
-
-        previousPhoto() {
-            if (this.isAnimating) return;
-            const prevIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
-            this.goToPhoto(prevIndex);
-        }
-
-        goToPhoto(index) {
-            if (this.isAnimating || index === this.currentIndex) return;
-            
-            this.isAnimating = true;
+        navigate(index) {
             this.currentIndex = index;
-            
-            this.updateCardPositions();
-            this.updateDots();
-            
-            setTimeout(() => {
-                this.isAnimating = false;
-            }, 500);
+            this.updateStack();
+            this.updateNav();
         }
 
-        updateCardPositions() {
+        updateStack() {
             this.cards.forEach((card, index) => {
-                const position = (index - this.currentIndex + this.cards.length) % this.cards.length;
+                card.classList.remove('active');
                 
-                card.classList.remove('active', 'prev', 'next', 'hidden');
+                const offset = index - this.currentIndex;
+                const absOffset = Math.abs(offset);
+                const direction = offset > 0 ? 1 : -1;
                 
-                if (position === 0) {
+                if (offset === 0) {
                     card.classList.add('active');
-                } else if (position === 1) {
-                    card.classList.add('next');
-                } else if (position === this.cards.length - 1) {
-                    card.classList.add('prev');
+                    card.style.transform = 'translateX(0) translateY(0) rotate(0deg) scale(1.05)';
+                    card.style.zIndex = 10;
+                    card.style.opacity = 1;
+                } else if (absOffset <= 3) {
+                    const translateX = offset * 10;
+                    const translateY = absOffset * 10;
+                    const rotate = offset * 2;
+                    const scale = 1 - absOffset * 0.05;
+                    
+                    card.style.transform = `translateX(${translateX}px) translateY(${translateY}px) rotate(${rotate}deg) scale(${scale})`;
+                    card.style.zIndex = 10 - absOffset;
+                    card.style.opacity = 1 - absOffset * 0.15;
                 } else {
-                    card.classList.add('hidden');
+                    card.style.opacity = 0;
+                    card.style.zIndex = 0;
                 }
             });
         }
 
-        updateDots() {
-            this.dots.forEach((dot, index) => {
+        updateNav() {
+            this.navDots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === this.currentIndex);
             });
         }
-    }
 
-    // Ripple effect
-    function createRipple(e) {
-        const ripple = document.createElement('div');
-        ripple.className = 'ripple';
-        
-        const rect = e.currentTarget.getBoundingClientRect();
-        const size = 20;
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
-        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
-        
-        e.currentTarget.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 600);
-    }
+        createRipple(x, y) {
+            const ripple = document.createElement('div');
+            ripple.className = 'touch-ripple';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        }
 
-    // Toast notification
-    function showToast(message) {
-        // Simple feedback for demo
-        const existingToast = document.querySelector('.toast');
-        if (existingToast) existingToast.remove();
-        
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.textContent = message;
-        toast.style.cssText = `
-            position: fixed;
-            bottom: calc(var(--nav-height) + 80px);
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            z-index: 1000;
-            animation: toast-in 0.3s ease;
-        `;
-        
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 2000);
-    }
-
-    // Initialize app
-    document.addEventListener('DOMContentLoaded', () => {
-        // Start systems
-        new ParticleSystem();
-        const carousel = new PhotoCarousel();
-        
-        // Add ripple to nav items
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', createRipple);
-        });
-        
-        // Prevent pull-to-refresh
-        document.body.addEventListener('touchmove', (e) => {
-            if (e.touches[0].clientY > 0) {
-                e.preventDefault();
+        setupParticles() {
+            const field = document.getElementById('particleField');
+            
+            // Create initial particles
+            for (let i = 0; i < 15; i++) {
+                this.createParticle('sparkle', field);
             }
-        }, { passive: false });
+            for (let i = 0; i < 8; i++) {
+                this.createParticle('fairy-light', field);
+            }
+            for (let i = 0; i < 10; i++) {
+                this.createParticle('crystal-dust', field);
+            }
+            
+            // Continuous generation
+            setInterval(() => {
+                if (Math.random() > 0.6) this.createParticle('sparkle', field);
+                if (Math.random() > 0.8) this.createParticle('fairy-light', field);
+                if (Math.random() > 0.7) this.createParticle('crystal-dust', field);
+            }, 2000);
+        }
+
+        createParticle(type, container) {
+            const particle = document.createElement('div');
+            particle.className = type;
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            
+            container.appendChild(particle);
+            
+            // Cleanup
+            const duration = parseFloat(particle.style.animationDuration) * 1000;
+            setTimeout(() => particle.remove(), duration);
+        }
+
+        preventOverscroll() {
+            document.body.addEventListener('touchmove', (e) => {
+                if (e.target.closest('.photo-realm')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+        new EnchantedScrapbook();
+        
+        // Prevent zoom
+        document.addEventListener('gesturestart', (e) => e.preventDefault());
         
         // Handle orientation changes
         window.addEventListener('orientationchange', () => {
             setTimeout(() => {
-                carousel.updateCardPositions();
-            }, 300);
+                window.scrollTo(0, 0);
+            }, 100);
         });
     });
 
-    // Performance monitoring
-    if ('performance' in window) {
+    // Service worker for offline capability (optional)
+    if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            const perfData = window.performance.timing;
-            const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-            console.log(`Page load time: ${pageLoadTime}ms`);
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
         });
     }
 </script>
